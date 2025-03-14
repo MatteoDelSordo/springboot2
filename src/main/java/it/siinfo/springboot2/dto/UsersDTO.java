@@ -1,6 +1,9 @@
 package it.siinfo.springboot2.dto;
 
+import it.siinfo.springboot2.entity.Orders;
+
 import java.sql.Timestamp;
+import java.util.List;
 
 public class UsersDTO {
     private Long id;
@@ -9,19 +12,20 @@ public class UsersDTO {
     private String eMail;
     private Timestamp createdAt;
     private Integer phoneNumber;
-
+    private List<Orders> list;
     public UsersDTO() {
     }
 
     public UsersDTO(Integer phoneNumber,
                     Timestamp createdAt,
                     String eMail,
-                    String name, String password) {
+                    String name, String password, List<Orders> list) {
         this.phoneNumber = phoneNumber;
         this.createdAt = createdAt;
         this.eMail = eMail;
         this.name = name;
         this.password = password;
+        this.list= list;
     }
 
     public Long getId() {

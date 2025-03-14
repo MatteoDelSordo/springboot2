@@ -1,11 +1,11 @@
-package it.siinfo.springboot2.modelMapper;
+package it.siinfo.springboot2.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ModelMappperConfig {
+public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

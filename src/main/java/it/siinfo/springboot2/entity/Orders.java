@@ -1,9 +1,11 @@
 package it.siinfo.springboot2.entity;
 
+import it.siinfo.springboot2.Enum.ProductType;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.security.Timestamp;
-import java.util.List;
+import java.sql.Timestamp;
+
 
 @Entity
 public class Orders {
@@ -14,11 +16,15 @@ public class Orders {
     String product;
     @Column(nullable = false)
     Double amount;
-    @Column(nullable = false,columnDefinition = "timestamp")
+    @CreationTimestamp
     Timestamp orderDate;
-    @ManyToOne
-    @JoinColumn(name="id_user")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "order_user", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns =
+    @JoinColumn(name = "id_order"))
     private Users users;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProductType productType;
 
     public Orders() {
     }
@@ -26,12 +32,23 @@ public class Orders {
 
     public Orders(Timestamp orderDate,
                   Double amount,
-                  String product) {
+                  String product,
+                  Users users,
+                  ProductType productType) {
         this.orderDate = orderDate;
         this.amount = amount;
         this.product = product;
+        this.users = users;
+        this.productType = productType;
     }
 
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
 
     public Long getId() {
         return id;
@@ -63,5 +80,13 @@ public class Orders {
 
     public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 }

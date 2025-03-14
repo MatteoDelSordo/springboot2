@@ -2,11 +2,10 @@ package it.siinfo.springboot2.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.sql.Timestamp;
 import java.util.List;
 
-import it.siinfo.springboot2.entity.Orders;
+
 
 @Entity
 public class Users {
