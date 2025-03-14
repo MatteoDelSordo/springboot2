@@ -71,6 +71,7 @@ public class UserController {
         userService.updateNameAndEmailUserById(id, usersDto);
     }
 
+
     @PutMapping(path = "/resetpw/{id}")
     public void resetPwById(@PathVariable Long id,
                             @RequestBody UsersDTO usersDto) {
