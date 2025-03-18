@@ -18,23 +18,21 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService) {
+
         this.userService = userService;
     }
 
 
     @GetMapping(path = "/lista")
-    public List<Users> getUsers(Model model) {
-        List<Users> users = userService.getUsers();
-        System.out.println("ciao");
-        model.addAttribute("users", users);
-        return users;
+    public List<Users> getUsers() {
+
+        return userService.getUsers();
     }
 
     @GetMapping(path = "/listaordinata")
-    public List<Users> getUsersOrderedByName(Model model) {
-        List<Users> users = userService.getUserOrderedByName();
-        model.addAttribute("users", users);
-        return users;
+    public List<Users> getUsersOrderedByName() {
+
+        return userService.getUserOrderedByName();
     }
 
     @GetMapping(path = "/listaordinataconjpa")
@@ -48,26 +46,36 @@ public class UserController {
 
         return userService.getUserByName(name);
     }
+//    Provato, ma non mi trova l'annotazione, mi chiede di cercare una dipendenza maven ma cliccandoci non la trova
+//    @GetMapping(path = "/getbyname/{name}")
+//    public List<Users> getUsersByName(@QueryParam String name) {
+//
+//        return userService.getUserByName(name);
+//    }
 
     @GetMapping(path = "/utente/{id}")
     public Users getUserById(@PathVariable Long id) {
+
         return userService.findUserById(id);
     }
 
 
     @PostMapping(path = "/add")
     public void createUser(@RequestBody UsersDTO usersDto) {
-        Users salvato = userService.addUser(usersDto);
+
+        userService.addUser(usersDto);
     }
 
     @DeleteMapping(path = "/deleteid/{id}")
     public void deleteUserById(@PathVariable Long id) {
+
         userService.deleteUserById(id);
     }
 
     @PutMapping(path = "/modifica/{id}")
     public void updateNameAndEmailUserById(@PathVariable Long id,
                                            @RequestBody UsersDTO usersDto) {
+
         userService.updateNameAndEmailUserById(id, usersDto);
     }
 
@@ -75,6 +83,7 @@ public class UserController {
     @PutMapping(path = "/resetpw/{id}")
     public void resetPwById(@PathVariable Long id,
                             @RequestBody UsersDTO usersDto) {
+
         userService.resetPwById(id, usersDto);
     }
 

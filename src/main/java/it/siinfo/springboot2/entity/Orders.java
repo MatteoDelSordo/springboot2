@@ -1,5 +1,6 @@
 package it.siinfo.springboot2.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import it.siinfo.springboot2.Enum.ProductType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,9 +19,9 @@ public class Orders {
     Double amount;
     @CreationTimestamp
     Timestamp orderDate;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "order_user", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns =
-    @JoinColumn(name = "id_order"))
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private Users users;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

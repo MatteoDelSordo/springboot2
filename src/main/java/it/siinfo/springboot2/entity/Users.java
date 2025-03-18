@@ -1,5 +1,6 @@
 package it.siinfo.springboot2.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.sql.Timestamp;
@@ -22,9 +23,8 @@ public class Users {
     Timestamp createdAt;
     @Column
     Long phoneNumber;
-    //    @OneToMany(mappedBy = "users")
-//    private List<Orders> orders;
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "users",cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval = true )
+    @JsonManagedReference
     private List<Orders> orders;
 
 

@@ -6,9 +6,7 @@ import it.siinfo.springboot2.entity.Orders;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.mapper.OrdersMapper;
 import it.siinfo.springboot2.repository.OrderRepository;
-import it.siinfo.springboot2.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,6 @@ public class OrdersService {
     final OrderRepository orderRepository;
     final UserService userService;
     private final OrdersMapper ordersMapper;
-
     private ModelMapper mm;
 
     @Autowired
@@ -36,17 +33,24 @@ public class OrdersService {
 
     }
 
+    //Get degli ordini
     public List<OrdersDTO> getOrders() {
         List<Orders> o = orderRepository.findAll();
         return ordersMapper.toOrdersDTOList(o);
     }
 
-    public Orders findOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Ordine non trovato"));
+    //Get di un ordine specifico tramite id
+    public OrdersDTO findOrderById(Long id) {
+
+        Orders orderDaMappare = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Ordine non trovato"));
+
+        return ordersMapper.toOrdersDTO(orderDaMappare);
+
 
 
     }
 
+    //Aggiunge un ordine e crea un user
     public void addOrderWithUser(OrdersDTO ordersDTO,
                                  UsersDTO usersDTO) {
         Users uNuovo = userService.addUser(usersDTO);
@@ -57,16 +61,22 @@ public class OrdersService {
         orderRepository.save(order);
     }
 
-
+    // questo serviva principalmente per vedere se funznionava l'add dell ordine, è virtualmente inutile ora.
     public Orders addOrder(OrdersDTO ordersDTO) {
         Orders order = mm.map(ordersDTO, Orders.class);
         return orderRepository.save(order);
     }
 
-
+    //Modifica tramite id
     public void modifyById(Long id,
                            OrdersDTO ordersDTO) {
-//        Optional<>
+
+        Optional<Orders> optionalOrders = orderRepository.findById(id);
+        Orders franco = optionalOrders.get();
+        franco.setProduct(ordersDTO.getProduct());
+        franco.setAmount(ordersDTO.getAmount());
+        franco.setProductType(ordersDTO.getProductType());
+        orderRepository.save(franco);
 
 
     }
@@ -78,5 +88,12 @@ public class OrdersService {
         order.setUsers(user);
         return orderRepository.save(order);
 
+    }
+
+
+    public void deleteById(Long id) {
+//        Optional<Orders> optionalOrders = orderRepository.findById(id);
+//        Orders orders = optionalOrders.get();
+        orderRepository.deleteById(id);
     }
 }

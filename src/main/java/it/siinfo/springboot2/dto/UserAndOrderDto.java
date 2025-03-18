@@ -1,12 +1,10 @@
 package it.siinfo.springboot2.dto;
 
-import java.util.Objects;
-
-public class UserANdORderDto {
+public class UserAndOrderDto {
     private UsersDTO usersDTO;
     private OrdersDTO ordersDTO;
 
-    public UserANdORderDto(UsersDTO usersDTO,
+    public UserAndOrderDto(UsersDTO usersDTO,
                            OrdersDTO ordersDTO) {
         this.usersDTO = usersDTO;
         this.ordersDTO = ordersDTO;

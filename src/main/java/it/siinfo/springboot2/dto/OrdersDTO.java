@@ -1,7 +1,8 @@
 package it.siinfo.springboot2.dto;
+
+import it.siinfo.springboot2.Enum.ProductType;
+
 import java.sql.Timestamp;
-
-
 
 
 public class OrdersDTO {
@@ -15,18 +16,29 @@ public class OrdersDTO {
 
     private Long userId;
 
+    private ProductType productType;
+
+
     public OrdersDTO() {
     }
 
     public OrdersDTO(Timestamp orderDate,
                      Double amount,
-                     String product,Long userId) {
+                     String product, Long userId, ProductType productType) {
         this.orderDate = orderDate;
         this.amount = amount;
         this.product = product;
         this.userId = userId;
+        this.productType = productType;
     }
 
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
 
     public Long getId() {
         return id;
