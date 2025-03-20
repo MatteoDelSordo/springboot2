@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 
 @Entity
@@ -13,18 +12,21 @@ import java.util.List;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(nullable = false)
-    String name;
+    private String name;
     @Column(nullable = false)
-    String eMail;
+    private String eMail;
     @Column(nullable = false)
-    String password;
+    private String password;
     @CreationTimestamp
-    Timestamp createdAt;
+    private Timestamp createdAt;
     @Column
-    Long phoneNumber;
-
+    private Long phoneNumber;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JoinColumn(name = "address_id",referencedColumnName = "id")
+    private Address address;
 
     public Users() {
     }
@@ -32,11 +34,13 @@ public class Users {
     public Users(Timestamp createdAt,
                  String password,
                  String eMail,
-                 String name) {
+                 String name,
+                 Address address) {
         this.createdAt = createdAt;
         this.password = password;
         this.eMail = eMail;
         this.name = name;
+        this.address = address;
     }
 
 
@@ -86,5 +90,13 @@ public class Users {
 
     public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

@@ -3,6 +3,7 @@ package it.siinfo.springboot2.service;
 import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class UserService {
     public Users findUserById(Long id) {
         Optional<Users> optionalUsers = userRepository.findById(id);
         if (optionalUsers.isEmpty()) {
-            throw new IllegalArgumentException("Utente non trovato");
+            throw new EntityNotFoundException("Utente non trovato");
         }
         return optionalUsers.get();
     }
@@ -56,7 +57,7 @@ public class UserService {
 
         Optional<Users> optionalUsers = userRepository.findById(id);
         if (optionalUsers.isEmpty()) {
-            throw new IllegalArgumentException("qualcosa è andato storto");
+            throw new EntityNotFoundException("qualcosa è andato storto");
         }
         Users paolino = optionalUsers.get();
         paolino.setName(userDto.getName());
@@ -69,7 +70,7 @@ public class UserService {
 
         Optional<Users> optionalUsers = userRepository.findById(id);
         if (optionalUsers.isEmpty()) {
-            throw new IllegalArgumentException("qualcosa è andato storto");
+            throw new EntityNotFoundException("qualcosa è andato storto");
         }
         Users paolino = optionalUsers.get();
         paolino.setPassword(userDto.getPassword());

@@ -90,4 +90,5 @@ public class Orders {
     public void setProductType(ProductType productType) {
         this.productType = productType;
     }
+
 }

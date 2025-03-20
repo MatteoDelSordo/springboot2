@@ -8,6 +8,8 @@ import it.siinfo.springboot2.mapper.OrdersMapper;
 import it.siinfo.springboot2.repository.OrderRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -111,5 +113,9 @@ public class OrdersService {
         System.out.println(ordersList);
         return ordersList.stream().map(ordersMapper::toOrdersDTO).toList();
 
+    }
+
+    public Page<Orders> getAllOrders(Pageable pageable) {
+       return orderRepository.findAll(pageable);
     }
 }
