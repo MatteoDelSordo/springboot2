@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 
 
 @Entity
+@Table(schema = "esercizio2")
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +20,8 @@ public class Orders {
     Double amount;
     @CreationTimestamp
     Timestamp orderDate;
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private Users users;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

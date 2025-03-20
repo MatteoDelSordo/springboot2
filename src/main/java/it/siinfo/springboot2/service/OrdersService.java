@@ -42,10 +42,10 @@ public class OrdersService {
     //Get di un ordine specifico tramite id
     public OrdersDTO findOrderById(Long id) {
 
-        Orders orderDaMappare = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Ordine non trovato"));
+        Orders orderDaMappare = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(
+                "Ordine non trovato"));
 
         return ordersMapper.toOrdersDTO(orderDaMappare);
-
 
 
     }
@@ -95,5 +95,21 @@ public class OrdersService {
 //        Optional<Orders> optionalOrders = orderRepository.findById(id);
 //        Orders orders = optionalOrders.get();
         orderRepository.deleteById(id);
+    }
+
+
+    public List<OrdersDTO> getOrdersOfUsersById(Long userId) {
+
+        List<Orders> ordersList = orderRepository.findAllByUsers_Id(userId);
+
+        return ordersList.stream().map(ordersMapper::toOrdersDTO).toList();
+
+    }
+
+    public List<OrdersDTO> getAllByUserIdQuery(Long id) {
+        List<Orders> ordersList = orderRepository.findAllByUserIdQuerySchiantata(id);
+        System.out.println(ordersList);
+        return ordersList.stream().map(ordersMapper::toOrdersDTO).toList();
+
     }
 }

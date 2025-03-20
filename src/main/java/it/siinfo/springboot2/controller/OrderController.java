@@ -46,6 +46,7 @@ public class OrderController {
 
     }
 
+
 // questo non serve piu
 //    @PostMapping(path = "/addorder")
 //    public void addOrder(@RequestBody OrdersDTO ordersDTO) {
@@ -59,6 +60,15 @@ public class OrderController {
         Orders order = ordersService.addOrderToUser(idUser, ordersDTO);
     }
 
+@GetMapping(path = "/getquery/{id}")
+    public List<OrdersDTO> getOrdersByUtenteIdQuery(@PathVariable Long id) {
+        return ordersService.getAllByUserIdQuery(id);
+    }
+
+    @GetMapping(path = "/getordersofuser/{usersId}")
+    public List<OrdersDTO> getOrdersByUtenteId(@PathVariable Long usersId){
+        return ordersService.getOrdersOfUsersById(usersId);
+    }
     @PutMapping(path = "/update/{id}")
     public void updateById(@RequestBody OrdersDTO ordersDTO,
                            @PathVariable Long id) {

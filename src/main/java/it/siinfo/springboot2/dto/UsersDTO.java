@@ -12,20 +12,19 @@ public class UsersDTO {
     private String eMail;
     private Timestamp createdAt;
     private Integer phoneNumber;
-    private List<Orders> list;
+
     public UsersDTO() {
     }
 
     public UsersDTO(Integer phoneNumber,
                     Timestamp createdAt,
                     String eMail,
-                    String name, String password, List<Orders> list) {
+                    String name, String password) {
         this.phoneNumber = phoneNumber;
         this.createdAt = createdAt;
         this.eMail = eMail;
         this.name = name;
         this.password = password;
-        this.list= list;
     }
 
     public Long getId() {

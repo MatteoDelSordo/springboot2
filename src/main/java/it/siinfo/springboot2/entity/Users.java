@@ -3,12 +3,13 @@ package it.siinfo.springboot2.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.sql.Timestamp;
 import java.util.List;
 
 
-
 @Entity
+@Table(schema = "esercizio2")
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +24,6 @@ public class Users {
     Timestamp createdAt;
     @Column
     Long phoneNumber;
-    @OneToMany(mappedBy = "users",cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval = true )
-    @JsonManagedReference
-    private List<Orders> orders;
 
 
     public Users() {
@@ -34,13 +32,11 @@ public class Users {
     public Users(Timestamp createdAt,
                  String password,
                  String eMail,
-                 String name,
-                 List<Orders> orders) {
+                 String name) {
         this.createdAt = createdAt;
         this.password = password;
         this.eMail = eMail;
         this.name = name;
-        this.orders = orders;
     }
 
 
@@ -82,14 +78,6 @@ public class Users {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public List<Orders> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Orders> orders) {
-        this.orders = orders;
     }
 
     public Long getPhoneNumber() {
