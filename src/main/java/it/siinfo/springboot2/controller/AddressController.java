@@ -1,9 +1,8 @@
 package it.siinfo.springboot2.controller;
 
 import it.siinfo.springboot2.dto.AddressDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import it.siinfo.springboot2.service.AddressService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,10 +11,40 @@ import java.util.List;
 public class AddressController {
 
 
+    AddressService addressService;
+
+
     @GetMapping(path = "/list")
     public List<AddressDTO> getAddressList() {
-        return null;
+        return addressService.getAddressList();
     }
 
 
+    @GetMapping(path = "/addresbyid/{id}")
+    public AddressDTO getAddressById(@RequestParam Long id) {
+        return addressService.getAddressById(id);
+    }
+
+
+    @GetMapping(path = "/addressbyuser/{userId}")
+    public AddressDTO getAddressByUserId(@PathVariable Long userId) {
+
+        return addressService.getAddressByUserId(userId);
+    }
+
+    @PostMapping(path = "/aggiungi")
+    public void createAddress(AddressDTO addressDTO) {
+        addressService.createAddress(addressDTO);
+    }
+
+    @PutMapping(path = "/updateaddress/{id}")
+
+    public void updateAddress(@PathVariable Long id, AddressDTO addressDTO) {
+        addressService.updateAddressById(id, addressDTO);
+    }
+
+    @DeleteMapping(path = "/deleteaddress/{id}")
+    public void deleteAddress(@PathVariable Long id) {
+        addressService.deleteAddressById(id);
+    }
 }
