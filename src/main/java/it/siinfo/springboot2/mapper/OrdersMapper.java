@@ -12,14 +12,13 @@ public interface OrdersMapper {
 
 
     Orders toOrders(OrdersDTO ordersDTO);
+
     @Mapping(target = "userId", source = "users.id")
-    OrdersDTO toOrdersDTO (Orders orders);
+    OrdersDTO toOrdersDTO(Orders orders);
 
-    List<Orders> toOrderList (List<OrdersDTO> ordersDTOS);
-    List<OrdersDTO> toOrdersDTOList (List<Orders> orders);
+    List<Orders> toOrderList(List<OrdersDTO> ordersDTOS);
 
-
-
+    List<OrdersDTO> toOrdersDTOList(List<Orders> orders);
 
 
 }

@@ -2,6 +2,7 @@ package it.siinfo.springboot2.controller;
 
 import it.siinfo.springboot2.dto.AddressDTO;
 import it.siinfo.springboot2.service.AddressService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,10 @@ public class AddressController {
 
     AddressService addressService;
 
+    @Autowired
+    public AddressController(AddressService addressService) {
+        this.addressService = addressService;
+    }
 
     @GetMapping(path = "/list")
     public List<AddressDTO> getAddressList() {
@@ -32,9 +37,9 @@ public class AddressController {
         return addressService.getAddressByUserId(userId);
     }
 
-    @PostMapping(path = "/aggiungi")
-    public void createAddress(AddressDTO addressDTO) {
-        addressService.createAddress(addressDTO);
+    @PostMapping(path = "/aggiungi/{userId}")
+    public void createAddress(@PathVariable Long userId,AddressDTO addressDTO) {
+        addressService.createAddress(userId,addressDTO);
     }
 
     @PutMapping(path = "/updateaddress/{id}")

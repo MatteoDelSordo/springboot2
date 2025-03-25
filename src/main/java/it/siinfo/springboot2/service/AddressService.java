@@ -1,6 +1,5 @@
 package it.siinfo.springboot2.service;
 
-import com.sun.source.tree.IfTree;
 import it.siinfo.springboot2.dto.AddressDTO;
 import it.siinfo.springboot2.entity.Address;
 import it.siinfo.springboot2.entity.Users;
@@ -21,7 +20,8 @@ public class AddressService {
     private final UserRepository userRepository;
 
     public AddressService(AddressMapper addressMapper,
-                          AddressRepository addressRepository, UserRepository userRepository) {
+                          AddressRepository addressRepository,
+                          UserRepository userRepository) {
         this.addressMapper = addressMapper;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
@@ -57,13 +57,22 @@ public class AddressService {
         return addressMapper.toAddressDto(address);
     }
 
-    public void createAddress(AddressDTO addressDTO) {
+    public void createAddress(Long id,
+                              AddressDTO addressDTO) {
 
+        Optional<Users> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new EntityNotFoundException("User con id" + id + "non presente");
+        }
+        Users user = optionalUser.get();
         Address address = addressMapper.toAddress(addressDTO);
+        user.setAddress(address);
+        address.setUser(user);
         addressRepository.save(address);
     }
 
-    public void updateAddressById(Long id, AddressDTO addressDTO) {
+    public void updateAddressById(Long id,
+                                  AddressDTO addressDTO) {
 
         Optional<Address> optionalAddress = addressRepository.findById(id);
         if (optionalAddress.isEmpty()) {

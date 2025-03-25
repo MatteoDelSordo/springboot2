@@ -116,6 +116,6 @@ public class OrdersService {
     }
 
     public Page<Orders> getAllOrders(Pageable pageable) {
-       return orderRepository.findAll(pageable);
+        return orderRepository.findAll(pageable);
     }
 }
