@@ -26,7 +26,7 @@ public class AddressController {
 
 
     @GetMapping(path = "/addresbyid/{id}")
-    public AddressDTO getAddressById(@RequestParam Long id) {
+    public AddressDTO getAddressById(@PathVariable Long id) {
         return addressService.getAddressById(id);
     }
 
@@ -38,13 +38,13 @@ public class AddressController {
     }
 
     @PostMapping(path = "/aggiungi/{userId}")
-    public void createAddress(@PathVariable Long userId,AddressDTO addressDTO) {
+    public void createAddress(@PathVariable Long userId, @RequestBody AddressDTO addressDTO) {
         addressService.createAddress(userId,addressDTO);
     }
 
     @PutMapping(path = "/updateaddress/{id}")
 
-    public void updateAddress(@PathVariable Long id, AddressDTO addressDTO) {
+    public void updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
         addressService.updateAddressById(id, addressDTO);
     }
 

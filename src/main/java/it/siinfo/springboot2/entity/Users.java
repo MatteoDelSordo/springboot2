@@ -25,7 +25,7 @@ public class Users {
     private Long phoneNumber;
     @OneToOne(cascade = CascadeType.ALL)
     @JsonManagedReference
-    @JoinColumn(name = "address_id",referencedColumnName = "id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
     public Users() {
@@ -41,6 +41,7 @@ public class Users {
         this.eMail = eMail;
         this.name = name;
         this.address = address;
+
     }
 
 

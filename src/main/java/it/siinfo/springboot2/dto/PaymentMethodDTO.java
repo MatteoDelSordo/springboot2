@@ -3,25 +3,25 @@ package it.siinfo.springboot2.dto;
 import java.time.LocalDate;
 
 public class PaymentMethodDTO {
-    private String maskedCardNumber;
+    private String cardNumber;
     private LocalDate expirationDate;
     private Long userId;
 
     public PaymentMethodDTO() {
     }
 
-    public PaymentMethodDTO(String maskedCardNumber, LocalDate expirationDate, Long userId) {
-        this.maskedCardNumber = maskedCardNumber;
+    public PaymentMethodDTO(String cardNumber, LocalDate expirationDate, Long userId) {
+        this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.userId = userId;
     }
 
-    public String getMaskedCardNumber() {
-        return maskedCardNumber;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setMaskedCardNumber(String maskedCardNumber) {
-        this.maskedCardNumber = maskedCardNumber;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public LocalDate getExpirationDate() {

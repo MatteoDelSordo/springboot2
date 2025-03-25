@@ -9,6 +9,13 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
+//    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "user", ignore = true)
+//    @Mapping(target = "street", source = "street")
+//    @Mapping(target = "city", source = "city")
+//    @Mapping(target = "state", source = "state")
+//    @Mapping(target = "zipCode", source = "zipCode")
+//    @Mapping(target = "country", source = "country")
     Address toAddress(AddressDTO addressDTO);
 
     @Mapping(target = "userId", source = "user.id")

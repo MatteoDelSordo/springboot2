@@ -59,15 +59,18 @@ public class AddressService {
 
     public void createAddress(Long id,
                               AddressDTO addressDTO) {
-
+//        if (addressDTO.getCity() == null || addressDTO.getStreet() == null || addressDTO.getState() == null ||
+//        addressDTO.getZipCode() == null || addressDTO.getCountry() == null) {
+//            throw new IllegalArgumentException("All address fields are required");
+//        }
         Optional<Users> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new EntityNotFoundException("User con id" + id + "non presente");
         }
         Users user = optionalUser.get();
         Address address = addressMapper.toAddress(addressDTO);
-        user.setAddress(address);
         address.setUser(user);
+        user.setAddress(address);
         addressRepository.save(address);
     }
 
@@ -81,15 +84,13 @@ public class AddressService {
         Address address = optionalAddress.get();
         AddressDTO addressDaModificare = addressMapper.toAddressDto(address);
 
-        addressDaModificare.setCity(addressDTO.getCity());
-        addressDaModificare.setCountry(addressDTO.getCountry());
-        addressDaModificare.setState(addressDTO.getState());
-        addressDaModificare.setStreet(addressDTO.getStreet());
-        addressDaModificare.setZipCode(addressDTO.getZipCode());
+        address.setCity(addressDTO.getCity());
+        address.setCountry(addressDTO.getCountry());
+        address.setState(addressDTO.getState());
+        address.setStreet(addressDTO.getStreet());
+        address.setZipCode(addressDTO.getZipCode());
 
-        Address modificato = addressMapper.toAddress(addressDaModificare);
-
-        addressRepository.save(modificato);
+        addressRepository.save(address);
 
     }
 

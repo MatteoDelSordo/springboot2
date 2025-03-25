@@ -19,7 +19,14 @@ public class Address {
     private String zipCode;
     @Column(nullable = false)
     private String country;
-    @OneToOne(mappedBy = "address")
+    @OneToOne(cascade = CascadeType.ALL)
+/*    Allora, so che è sbagliato, abbiamo passato circa due ore e un quarto con alex a cercare di capire cosa succedeva.
+      Abbiamo provato di tutto, a swappare le joincolumn, abbiamo provato diversi approcci nei metodi, cambiato l'ordine in cui
+      vengono salvate e settate le cose, ma non siamo riusciti a trovare soluzione.
+      In ogni caso, dal lato opposto a dove c'era la join la l'id usato come fk non veniva salvato.
+      Il metodo nel service a cui mi riferisco è createAddress
+  */
+    @JoinColumn(name = "user_id")
     @JsonBackReference
     private Users user;
 

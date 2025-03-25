@@ -20,7 +20,7 @@ public class Orders {
     Double amount;
     @CreationTimestamp
     Timestamp orderDate;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
     @Enumerated(EnumType.STRING)
