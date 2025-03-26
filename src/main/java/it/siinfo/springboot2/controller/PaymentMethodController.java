@@ -24,7 +24,7 @@ public class PaymentMethodController {
     }
 
 
-    @GetMapping(path = "/create/{id}")
+    @PostMapping (path = "/create/{id}")
     public void create(@PathVariable Long id,
                        @RequestBody PaymentMethodDTO paymentMethodDTO) {
 
