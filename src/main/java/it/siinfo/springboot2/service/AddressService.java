@@ -95,6 +95,14 @@ public class AddressService {
     }
 
     public void deleteAddressById(Long id) {
+        Optional<Address> optionalAddress = addressRepository.findById(id);
+        if (optionalAddress.isEmpty()) {
+            throw new EntityNotFoundException("Indirizzo inesistente");
+        }
+        Address address = optionalAddress.get();
+        Users user = address.getUser();
+        user.setAddress(null);
+        userRepository.save(user);
         addressRepository.deleteById(id);
     }
 

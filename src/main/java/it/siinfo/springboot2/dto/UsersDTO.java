@@ -13,8 +13,8 @@ public class UsersDTO {
     private Integer phoneNumber;
     private Address address;
 
-    public UsersDTO(Address address) {
-        this.address = address;
+    public UsersDTO() {
+
     }
 
     public UsersDTO(Integer phoneNumber,

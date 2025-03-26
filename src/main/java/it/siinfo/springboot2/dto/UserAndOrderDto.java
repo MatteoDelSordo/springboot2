@@ -4,6 +4,9 @@ public class UserAndOrderDto {
     private UsersDTO usersDTO;
     private OrdersDTO ordersDTO;
 
+    public UserAndOrderDto() {
+    }
+
     public UserAndOrderDto(UsersDTO usersDTO,
                            OrdersDTO ordersDTO) {
         this.usersDTO = usersDTO;

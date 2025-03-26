@@ -23,7 +23,7 @@ public class Users {
     private Timestamp createdAt;
     @Column
     private Long phoneNumber;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
     @JoinColumn(name = "address_id")
     private Address address;
@@ -100,4 +100,5 @@ public class Users {
     public void setAddress(Address address) {
         this.address = address;
     }
+
 }

@@ -1,22 +1,26 @@
 package it.siinfo.springboot2.entity;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
+
 @Entity
 public class PaymentMethod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String cardNumber;
+
     @Column(nullable = false)
     private Date expirationDate;
+
     @Column(nullable = false)
     private String cvv;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Users user;
 
     public PaymentMethod() {
