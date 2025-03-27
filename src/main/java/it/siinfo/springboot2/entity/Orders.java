@@ -1,6 +1,6 @@
 package it.siinfo.springboot2.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.siinfo.springboot2.Enum.ProductType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,6 +26,9 @@ public class Orders {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProductType productType;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Shipment shipment;
 
     public Orders() {
     }
@@ -35,12 +38,14 @@ public class Orders {
                   Double amount,
                   String product,
                   Users users,
-                  ProductType productType) {
+                  ProductType productType,
+                  Shipment shipment) {
         this.orderDate = orderDate;
         this.amount = amount;
         this.product = product;
         this.users = users;
         this.productType = productType;
+        this.shipment = shipment;
     }
 
     public Users getUsers() {
@@ -91,4 +96,11 @@ public class Orders {
         this.productType = productType;
     }
 
+    public Shipment getShipment() {
+        return shipment;
+    }
+
+    public void setShipment(Shipment shipment) {
+        this.shipment = shipment;
+    }
 }

@@ -9,6 +9,7 @@ public class AddressDTO {
     private String zipCode;
     private String country;
     private Long userId;
+    private Long shipmentId;
 
 
     public AddressDTO() {
@@ -19,7 +20,8 @@ public class AddressDTO {
                       String state,
                       String zipCode,
                       String country,
-                      Long userId) {
+                      Long userId,
+                      Long shipmentId) {
 
         this.street = street;
         this.city = city;
@@ -27,6 +29,7 @@ public class AddressDTO {
         this.zipCode = zipCode;
         this.country = country;
         this.userId = userId;
+        this.shipmentId = shipmentId;
     }
 
 
@@ -76,5 +79,13 @@ public class AddressDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getShipmentId() {
+        return shipmentId;
+    }
+
+    public void setShipmentId(Long shipmentId) {
+        this.shipmentId = shipmentId;
     }
 }

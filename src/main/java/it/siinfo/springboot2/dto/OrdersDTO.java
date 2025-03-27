@@ -16,7 +16,10 @@ public class OrdersDTO {
 
     private Long userId;
 
+    private Long shipmentId;
+
     private ProductType productType;
+
 
 
     public OrdersDTO() {
@@ -24,11 +27,13 @@ public class OrdersDTO {
 
     public OrdersDTO(Timestamp orderDate,
                      Double amount,
-                     String product, Long userId, ProductType productType) {
+                     String product, Long userId,
+                     Long shipmentId, ProductType productType) {
         this.orderDate = orderDate;
         this.amount = amount;
         this.product = product;
         this.userId = userId;
+        this.shipmentId = shipmentId;
         this.productType = productType;
     }
 
@@ -78,5 +83,13 @@ public class OrdersDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getShipmentId() {
+        return shipmentId;
+    }
+
+    public void setShipmentId(Long shipmentId) {
+        this.shipmentId = shipmentId;
     }
 }

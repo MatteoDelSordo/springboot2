@@ -9,6 +9,7 @@ import it.siinfo.springboot2.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public class PaymentMethodService {
         this.userRepository = userRepository;
         this.paymentMethodMapper = paymentMethodMapper;
     }
-
+    @Transactional
     public void createPaymentMethodForUser(Long id,
                                            PaymentMethodDTO paymentMethodDTO) {
         Optional<Users> optionalUsers = userRepository.findById(id);
@@ -42,18 +43,18 @@ public class PaymentMethodService {
         paymentMethodRepository.save(paymentMethod);
 
     }
-
+    @Transactional
     public void deletePaymentMethodForUser(Long id) {
         paymentMethodRepository.delete(id);
     }
-
+    @Transactional
     public List<PaymentMethodDTO> getPaymentMethodForUser(Long id) {
 
         List<PaymentMethod> list = paymentMethodRepository.findAllByUserId(id);
 
         return paymentMethodMapper.toPaymentMethodListDto(list);
     }
-
+    @Transactional
     public void update(Long id,
                        PaymentMethodDTO paymentMethodDTO) {
 
@@ -69,7 +70,7 @@ public class PaymentMethodService {
         paymentMethodRepository.save(paymentMethodToChange);
 
     }
-
+    @Transactional
     public List<PaymentMethod> getAllPayments(){
         return paymentMethodRepository.findAll();
     }

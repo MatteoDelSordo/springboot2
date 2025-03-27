@@ -1,5 +1,6 @@
 package it.siinfo.springboot2.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import it.siinfo.springboot2.Enum.Status;
 import jakarta.persistence.*;
 
@@ -14,13 +15,14 @@ public class Shipment {
     private Long id;
     @Column(nullable = false)
     private String rackingNumber;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Status status;
     @Column(nullable = false)
     private LocalDateTime estimatedDeliveryDate;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Orders orders;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Address address;
 
     public Shipment() {

@@ -13,8 +13,8 @@ public interface ShipmentMapper {
 
     Shipment toShipment(ShipmentDTO shipmentDTO);
 
-    @Mapping(target = "orders", source = "orders.id")
-    @Mapping(target = "address", source = "address.id")
+    @Mapping(target = "ordersId", source = "orders.id")
+    @Mapping(target = "addressId", source = "address.id")
     ShipmentDTO toShipmentDto(Shipment shipment);
 
     List<Shipment> toShipmentList(List<ShipmentDTO> shipmentDTOList);

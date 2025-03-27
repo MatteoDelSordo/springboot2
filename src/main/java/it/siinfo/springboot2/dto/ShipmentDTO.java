@@ -8,8 +8,8 @@ public class ShipmentDTO {
     private String rackingNumber;
     private Status status;
     private LocalDateTime estimatedDeliveryDate;
-    private OrdersDTO orders;
-    private AddressDTO address;
+    private Long ordersId;
+    private Long addressId;
 
     // Costruttori
     public ShipmentDTO() {
@@ -18,13 +18,13 @@ public class ShipmentDTO {
     public ShipmentDTO(String rackingNumber,
                        Status status,
                        LocalDateTime estimatedDeliveryDate,
-                       OrdersDTO orders,
-                       AddressDTO address) {
+                       Long ordersId,
+                       Long addressId) {
         this.rackingNumber = rackingNumber;
         this.status = status;
         this.estimatedDeliveryDate = estimatedDeliveryDate;
-        this.orders = orders;
-        this.address = address;
+        this.ordersId = ordersId;
+        this.addressId = addressId;
     }
 
     // Getter e Setter
@@ -52,20 +52,20 @@ public class ShipmentDTO {
         this.estimatedDeliveryDate = estimatedDeliveryDate;
     }
 
-    public OrdersDTO getOrders() {
-        return orders;
+    public Long getOrdersId() {
+        return ordersId;
     }
 
-    public void setOrders(OrdersDTO orders) {
-        this.orders = orders;
+    public void setOrdersId(Long ordersId) {
+        this.ordersId = ordersId;
     }
 
-    public AddressDTO getAddress() {
-        return address;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(AddressDTO address) {
-        this.address = address;
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
 

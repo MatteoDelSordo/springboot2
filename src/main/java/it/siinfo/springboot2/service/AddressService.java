@@ -8,6 +8,7 @@ import it.siinfo.springboot2.repository.AddressRepository;
 import it.siinfo.springboot2.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +28,14 @@ public class AddressService {
         this.userRepository = userRepository;
     }
 
-
+    @Transactional
     public List<AddressDTO> getAddressList() {
         List<Address> listdto = addressRepository.findAll();
 
         return listdto.stream().map(addressMapper::toAddressDto).toList();
 
     }
-
+    @Transactional
     public AddressDTO getAddressById(Long id) {
         Optional<Address> optionalAddress = addressRepository.findById(id);
         if (optionalAddress.isEmpty()) {
@@ -44,7 +45,7 @@ public class AddressService {
 
         return addressMapper.toAddressDto(address);
     }
-
+    @Transactional
     public AddressDTO getAddressByUserId(Long id) {
 
         Optional<Users> usersOptional = userRepository.findById(id);
@@ -56,7 +57,7 @@ public class AddressService {
 
         return addressMapper.toAddressDto(address);
     }
-
+    @Transactional
     public void createAddress(Long id,
                               AddressDTO addressDTO) {
 //        if (addressDTO.getCity() == null || addressDTO.getStreet() == null || addressDTO.getState() == null ||
@@ -73,7 +74,7 @@ public class AddressService {
         user.setAddress(address);
         addressRepository.save(address);
     }
-
+    @Transactional
     public void updateAddressById(Long id,
                                   AddressDTO addressDTO) {
 
@@ -93,7 +94,7 @@ public class AddressService {
         addressRepository.save(address);
 
     }
-
+    @Transactional
     public void deleteAddressById(Long id) {
         Optional<Address> optionalAddress = addressRepository.findById(id);
         if (optionalAddress.isEmpty()) {

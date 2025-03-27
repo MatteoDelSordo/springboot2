@@ -20,14 +20,19 @@ public class Address {
     @Column(nullable = false)
     private String country;
     @OneToOne
-    /*    Allora, so che è sbagliato, abbiamo passato circa due ore e un quarto con alex a cercare di capire cosa succedeva.
-      Abbiamo provato di tutto, a swappare le joincolumn, abbiamo provato diversi approcci nei metodi, cambiato l'ordine in cui
+    /*    Allora, so che è sbagliato, abbiamo passato circa due ore e un quarto con alex a cercare di capire cosa
+    succedeva.
+      Abbiamo provato di tutto, a swappare le joincolumn, abbiamo provato diversi approcci nei metodi, cambiato
+      l'ordine in cui
       vengono salvate e settate le cose, ma non siamo riusciti a trovare soluzione.
       In ogni caso, dal lato opposto a dove c'era la join la l'id usato come fk non veniva salvato.
       Il metodo nel service a cui mi riferisco è createAddress */
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private Users user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Shipment shipment;
 
     public Address() {
     }
@@ -37,13 +42,15 @@ public class Address {
                    String state,
                    String zipCode,
                    String country,
-                   Users user) {
+                   Users user,
+                   Shipment shipment) {
         this.street = street;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
         this.country = country;
         this.user = user;
+        this.shipment = shipment;
     }
 
     public Long getId() {
@@ -100,5 +107,13 @@ public class Address {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public Shipment getShipment() {
+        return shipment;
+    }
+
+    public void setShipment(Shipment shipment) {
+        this.shipment = shipment;
     }
 }
