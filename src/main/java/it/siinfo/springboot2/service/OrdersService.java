@@ -25,6 +25,7 @@ public class OrdersService {
     private final OrdersMapper ordersMapper;
     private ModelMapper mm;
 
+
     @Autowired
     public OrdersService(OrderRepository orderRepository,
                          ModelMapper modelMapper,
@@ -94,6 +95,16 @@ public class OrdersService {
                                  OrdersDTO ordersDTO) {
         Users user = userService.findUserById(idUser);
         Orders order = mm.map(ordersDTO, Orders.class);
+        order.setUsers(user);
+        return orderRepository.save(order);
+
+    }
+
+    @Transactional
+    public Orders addExistingOrderToUser(Long idUser,
+                                Long idOrder) {
+        Users user = userService.findUserById(idUser);
+        Orders order = orderRepository.findById(idOrder).orElseThrow(()-> new EntityNotFoundException("Ordine non trovato"));
         order.setUsers(user);
         return orderRepository.save(order);
 

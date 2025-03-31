@@ -10,18 +10,16 @@ public class Product {
     private Long id;
     @Column(nullable = false)
     private String nome;
-    @Column(nullable = false)
-    private Double price;
 
 
 
     public Product() {
     }
 
-    public Product(String nome,
-                   Double price) {
+    public Product(String nome) {
         this.nome = nome;
-        this.price = price;
+
+
     }
 
     public Long getId() {
@@ -40,11 +38,5 @@ public class Product {
         this.nome = nome;
     }
 
-    public Double getPrice() {
-        return price;
-    }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 }

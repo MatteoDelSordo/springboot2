@@ -1,44 +1,29 @@
-package it.siinfo.springboot2.entity;
+package it.siinfo.springboot2.dto;
 
-
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-public class Supplier {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long id;
-    @Column(nullable = false)
+public class SupplierDTO {
+    @NotBlank
     private String name;
-    @Column(nullable = false)
+
+    @NotBlank
     @Email
     private String contactEmail;
-    @Column
+
+    @NotBlank
     private String phoneNumber;
 
-
-    public Supplier() {
+    // Costruttori, Getter e Setter
+    public SupplierDTO() {
     }
 
-    public Supplier(Long id,
-                    String name,
-                    String contactEmail,
-                    String phoneNumber) {
-        this.id = id;
+    public SupplierDTO(String name,
+                       String contactEmail,
+                       String phoneNumber) {
         this.name = name;
         this.contactEmail = contactEmail;
         this.phoneNumber = phoneNumber;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -64,6 +49,4 @@ public class Supplier {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-
 }

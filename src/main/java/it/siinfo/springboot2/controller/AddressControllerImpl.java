@@ -9,13 +9,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/address")
-public class AddressController {
+public class AddressControllerImpl {
 
 
     AddressService addressService;
 
     @Autowired
-    public AddressController(AddressService addressService) {
+    public AddressControllerImpl(AddressService addressService) {
         this.addressService = addressService;
     }
 

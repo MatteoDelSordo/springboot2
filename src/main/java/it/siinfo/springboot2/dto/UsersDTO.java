@@ -11,7 +11,7 @@ public class UsersDTO {
     private String eMail;
     private Timestamp createdAt;
     private Integer phoneNumber;
-    private Address address;
+    private AddressDTO address;
 
     public UsersDTO() {
 
@@ -22,7 +22,7 @@ public class UsersDTO {
                     String eMail,
                     String name,
                     String password,
-                    Address address) {
+                    AddressDTO address) {
         this.phoneNumber = phoneNumber;
         this.createdAt = createdAt;
         this.eMail = eMail;
@@ -79,11 +79,11 @@ public class UsersDTO {
         this.password = password;
     }
 
-    public Address getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
 }

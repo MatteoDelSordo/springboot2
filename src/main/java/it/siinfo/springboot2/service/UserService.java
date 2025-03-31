@@ -2,6 +2,7 @@ package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Users;
+import it.siinfo.springboot2.mapper.UsersMapper;
 import it.siinfo.springboot2.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -19,22 +20,27 @@ public class UserService {
 
     final UserRepository userRepository;
     private ModelMapper mm;
+    private UsersMapper usersMapper;
 
     @Autowired
     public UserService(UserRepository userRepository,
-                       ModelMapper mm) {
+                       ModelMapper mm,
+                       UsersMapper usersMapper) {
         this.userRepository = userRepository;
         this.mm = mm;
+        this.usersMapper = usersMapper;
     }
+
     @Transactional
     public List<Users> getUsers() {
         return userRepository.findAll();
     }
 
     @Transactional
-    public List<Users>metodoJpa () {
+    public List<Users> metodoJpa() {
         return userRepository.findAllByOrderByNameAsc();
     }
+
     @Transactional
     public Users findUserById(Long id) {
         Optional<Users> optionalUsers = userRepository.findById(id);
@@ -43,17 +49,20 @@ public class UserService {
         }
         return optionalUsers.get();
     }
+
     @Transactional
     public Users addUser(UsersDTO usersDto) {
-        Users user = new Users();
-        mm.map(usersDto, user);
-        return userRepository.save(user);
+
+
+        return userRepository.save(usersMapper.toEntity(usersDto));
 
     }
+
     @Transactional
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
+
     @Transactional
     public void updateNameAndEmailUserById(Long id,
                                            UsersDTO userDto) {
@@ -67,6 +76,7 @@ public class UserService {
         paolino.seteMail(userDto.geteMail());
         userRepository.save(paolino);
     }
+
     @Transactional
     public void resetPwById(Long id,
                             UsersDTO userDto) {
@@ -86,6 +96,7 @@ public class UserService {
         orderedList = orderedList.stream().sorted(Comparator.comparing(Users::getName)).collect(Collectors.toList());
         return orderedList;
     }
+
     @Transactional
     public List<Users> getUserByName(String name) {
         return userRepository.findByName(name);
