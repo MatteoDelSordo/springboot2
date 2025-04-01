@@ -79,7 +79,6 @@ public class SupplierProductService {
 
             SupplierProduct updatedSupplierProduct = supplierProductRepository.save(supplierProduct);
 
-            supplierProductMapper.toSupplierProductDto(updatedSupplierProduct);
         } else {
             throw new RuntimeException("SupplierProduct not found with id: " + id);
         }
@@ -98,8 +97,8 @@ public class SupplierProductService {
     }
 
     public SupplierProductDTO associateProductAtSupplier(Long idProd,
-                                                 Long idSupp,
-                                                 SupplierProductDTO dto) {
+                                                         Long idSupp,
+                                                         SupplierProductDTO dto) {
         Product product = productRepository.findById(idProd).orElseThrow(() -> new EntityNotFoundException(
                 "Prodotto non trovato"));
 
@@ -119,5 +118,46 @@ public class SupplierProductService {
         return supplierProductMapper.toSupplierProductDto(supplierProduct);
 
     }
+
+
+    //    Se leggerai questo commento sappi che ho passato 30 minuti buoni a fare questo
+//    metodo scervellandomi sulle possibili problematiche che poteva comportare
+//    per poi rendermi conto che lo avevo gia fatto sopra in un minuto e mezzo.
+//    Mi sento scemo
+    public void modifyPriceAndQuantity(Long id,
+                                       SupplierProductDTO supplierProductDTO) {
+        Optional<SupplierProduct> optional = supplierProductRepository.findById(id);
+        if (optional.isPresent()) {
+            SupplierProduct product = optional.get();
+            SupplierProductDTO dto = supplierProductMapper.toSupplierProductDto(product);
+            dto.setPrice(supplierProductDTO.getPrice());
+            dto.setQuantity(supplierProductDTO.getQuantity());
+
+            supplierProductRepository.save(supplierProductMapper.toSupplierProduct(dto));
+
+        }
+        throw new EntityNotFoundException("Qualcosa è andato storto in supplierProductService");
+
+
+    }
+//Questo metodo lo lascio per ricordarmi di quando ho passato due ore a pensare a come slegare dalla
+// tabella di collegamento prodotti e fornitori ed ho deciso di impostare a null le due fk invece di eliminare direttamente il record.
+//    mi ricordo delle rimozioni logiche ma avevamo detto di non farle in questo progetto, anche se pesno che se finisco prima mi metto a farle
+
+//    public boolean dissociateProductFromSupplier(Long id) {
+//
+//        Optional<SupplierProduct> optional = supplierProductRepository.findById(id);
+//
+//        SupplierProduct supplierProduct = optional.get();
+//        SupplierProductDTO productDTO = supplierProductMapper.toSupplierProductDto(supplierProduct);
+//
+//        productDTO.set
+//
+//
+//
+//
+//        return true;
+//    }
+
 
 }

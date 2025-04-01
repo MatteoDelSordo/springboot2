@@ -1,5 +1,6 @@
 package it.siinfo.springboot2.controller;
 
+import it.siinfo.springboot2.dto.ProductDTO;
 import it.siinfo.springboot2.dto.SupplierDTO;
 import it.siinfo.springboot2.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,6 @@ public class SupplierController {
     public SupplierDTO findById(@PathVariable Long id) {
         return supplierService.findById(id);
     }
+
 
 }

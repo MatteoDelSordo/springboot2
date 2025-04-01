@@ -1,10 +1,9 @@
 package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.ProductDTO;
-import it.siinfo.springboot2.dto.SupplierDTO;
-import it.siinfo.springboot2.dto.SupplierProductDTO;
 import it.siinfo.springboot2.entity.Product;
 import it.siinfo.springboot2.entity.Supplier;
+import it.siinfo.springboot2.entity.SupplierProduct;
 import it.siinfo.springboot2.mapper.ProductMapper;
 import it.siinfo.springboot2.mapper.SupplierMapper;
 import it.siinfo.springboot2.repository.ProductRepository;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -79,7 +79,19 @@ public class ProductService {
         return productMapper.toProductDto(product);
     }
 
+    public List<ProductDTO> getAllProductOfSupplier(Long id) {
 
+//      Non so se sia giusto il fatto dell optional qui sotto, per il momento lo lascio come controllo,
+//      ma dovrebbe funzionare tutto anche senza
+        Optional<Supplier> supplierOptional = supplierRepository.findById(id);
+        if (supplierOptional.isPresent()) {
+            List<SupplierProduct> supplierProduct = supplierProductRepository.findAllBySupplier_Id(id);
+            List<Product> products = supplierProduct.stream().map(SupplierProduct::getProduct).toList();
+            return productMapper.toProductDtoList(products);
+        }
+
+        return null;
+    }
 
 
 }
