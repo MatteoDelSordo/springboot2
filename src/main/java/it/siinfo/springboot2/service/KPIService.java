@@ -38,14 +38,19 @@ public class KPIService {
         Long totalProducts = productRepository.count();
         List<SupplierProduct> supplierProductList = supplierProductRepository.findAll();
 
-        List<Double> list = supplierProductList.stream()
-                .map(SupplierProduct::getPrice)
-                .collect(Collectors.toList());
-        Double averagePrice = list.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+        Double averagePrice = 0.00;
 
-        Double averageQuantityPerProduct = supplierProductList.stream()
-                .map(SupplierProduct::getQuantity)
-                .mapToInt(value -> value).average().orElse(0);
+        for (SupplierProduct supplierProduct : supplierProductList) {
+            averagePrice = averagePrice + supplierProduct.getPrice();
+        }
+        averagePrice = averagePrice / supplierProductList.size();
+
+//        List<Double> list = supplierProductList.stream().map(SupplierProduct::getPrice).collect(Collectors.toList());
+//        Double averagePrice = list.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+
+        Double averageQuantityPerProduct =
+                supplierProductList.stream().map(SupplierProduct::getQuantity).mapToInt(value -> value).average().orElse(
+                0);
 
 
         return new KpiDTO(totalOrders, totalSuppliers, totalProducts, averagePrice, totalOrders);

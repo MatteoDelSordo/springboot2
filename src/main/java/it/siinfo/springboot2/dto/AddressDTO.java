@@ -1,14 +1,39 @@
 package it.siinfo.springboot2.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class AddressDTO {
 
+@Valid
 
+    @NotNull(message = "Il campo street non può essere vuoto")
+    @NotBlank(message = "Il campo street non può essere vuoto")
     private String street;
+
+    @NotNull(message = "Il campo city non può essere vuoto")
+    @NotBlank(message = "Il campo city non può essere vuoto")
     private String city;
+
+    @NotNull(message = "Il campo state non può essere vuoto")
+    @NotBlank(message = "Il campo state non può essere vuoto")
     private String state;
+
+    @NotNull(message = "Il campo zipCode non può essere vuoto")
+    @NotBlank(message = "Il campo zipCode non può essere vuoto")
     private String zipCode;
+
+    @NotNull(message = "Il campo country non può essere vuoto")
+    @NotBlank(message = "Il campo country non può essere vuoto")
     private String country;
+
+
     private Long userId;
+
+
     private Long shipmentId;
 
 

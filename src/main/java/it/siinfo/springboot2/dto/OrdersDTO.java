@@ -4,12 +4,17 @@ import it.siinfo.springboot2.Enum.ProductType;
 
 import java.sql.Timestamp;
 
+import jakarta.validation.constraints.*;
+
 
 public class OrdersDTO {
     private Long id;
 
+    @NotNull(message = "Il prodotto non puo essere vuoto")
+    @NotBlank(message = "Il prodotto non puo essere vuoto")
     private String product;
-
+    @NotNull(message = "pippo")
+    @NotBlank(message = "pippo")
     private Double amount;
 
     private Timestamp orderDate;
@@ -17,18 +22,20 @@ public class OrdersDTO {
     private Long userId;
 
     private Long shipmentId;
-
+    @Pattern(regexp = "^(ELECTRONICS|CLOTHING|FOOD|BOOKS|HOME_APPLIANCES|TOYS|SPORTS|BEAUTY|AUTOMOTIVE|OTHER)$",
+            message = "Tipo di prodotto non valido'")
     private ProductType productType;
 
 
-
-    public OrdersDTO() {
+    public OrdersDTO () {
     }
 
-    public OrdersDTO(Timestamp orderDate,
-                     Double amount,
-                     String product, Long userId,
-                     Long shipmentId, ProductType productType) {
+    public OrdersDTO (Timestamp orderDate,
+                      Double amount,
+                      String product,
+                      Long userId,
+                      Long shipmentId,
+                      ProductType productType) {
         this.orderDate = orderDate;
         this.amount = amount;
         this.product = product;
@@ -37,59 +44,59 @@ public class OrdersDTO {
         this.productType = productType;
     }
 
-    public ProductType getProductType() {
+    public ProductType getProductType () {
         return productType;
     }
 
-    public void setProductType(ProductType productType) {
+    public void setProductType (ProductType productType) {
         this.productType = productType;
     }
 
-    public Long getId() {
+    public Long getId () {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId (Long id) {
         this.id = id;
     }
 
-    public String getProduct() {
+    public String getProduct () {
         return product;
     }
 
-    public void setProduct(String product) {
+    public void setProduct (String product) {
         this.product = product;
     }
 
-    public Double getAmount() {
+    public Double getAmount () {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount (Double amount) {
         this.amount = amount;
     }
 
-    public Timestamp getOrderDate() {
+    public Timestamp getOrderDate () {
         return orderDate;
     }
 
-    public void setOrderDate(Timestamp orderDate) {
+    public void setOrderDate (Timestamp orderDate) {
         this.orderDate = orderDate;
     }
 
-    public Long getUserId() {
+    public Long getUserId () {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId (Long userId) {
         this.userId = userId;
     }
 
-    public Long getShipmentId() {
+    public Long getShipmentId () {
         return shipmentId;
     }
 
-    public void setShipmentId(Long shipmentId) {
+    public void setShipmentId (Long shipmentId) {
         this.shipmentId = shipmentId;
     }
 }

@@ -2,16 +2,20 @@ package it.siinfo.springboot2.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class SupplierDTO {
     @NotBlank
+    @NotNull
     private String name;
 
     @NotBlank
+    @NotNull
     @Email
     private String contactEmail;
 
     @NotBlank
+    @NotNull
     private String phoneNumber;
 
     // Costruttori, Getter e Setter

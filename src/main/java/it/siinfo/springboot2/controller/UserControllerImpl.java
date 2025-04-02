@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "users")
-public class UserController {
+public class UserControllerImpl {
 
 
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserControllerImpl(UserService userService) {
 
         this.userService = userService;
     }
@@ -73,7 +74,7 @@ public class UserController {
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Utente creato con successo"),
             @ApiResponse(responseCode = "400", description = "Dati non validi forniti nella richiesta")})
     @PostMapping(path = "/add")
-    public void createUser(@RequestBody UsersDTO usersDto) {
+    public void createUser(@Valid  @RequestBody UsersDTO usersDto) {
         userService.addUser(usersDto);
     }
 

@@ -2,6 +2,7 @@ package it.siinfo.springboot2.controller;
 
 import it.siinfo.springboot2.dto.AddressDTO;
 import it.siinfo.springboot2.service.AddressService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class AddressControllerImpl {
     }
 
     @PostMapping(path = "/aggiungi/{userId}")
-    public void createAddress(@PathVariable Long userId, @RequestBody AddressDTO addressDTO) {
+    public void createAddress(@PathVariable Long userId, @Valid @RequestBody AddressDTO addressDTO) {
         addressService.createAddress(userId,addressDTO);
     }
 

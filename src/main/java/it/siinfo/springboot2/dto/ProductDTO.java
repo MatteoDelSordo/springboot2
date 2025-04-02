@@ -1,6 +1,12 @@
 package it.siinfo.springboot2.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ProductDTO {
+
+    @NotBlank
+    @NotNull
     private String nome;
 
 
