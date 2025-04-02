@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-
 //【P】【i】【p】【p】【o】
 //【P】【i】【p】【p】【o】
 //【P】【i】【p】【p】【o】
@@ -31,6 +30,7 @@ public class KPIController {
     @GetMapping
     public KpiDTO pippo() {
         return pippo.pippo();
+
     }
 
 
