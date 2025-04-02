@@ -8,16 +8,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/kpi")
+
+
+
+
+
+//【P】【i】【p】【p】【o】
+//【P】【i】【p】【p】【o】
+//【P】【i】【p】【p】【o】
+//【P】【i】【p】【p】【o】
+//【P】【i】【p】【p】【o】
+
+
+
 public class KPIController {
-    private final KPIService kpiService;
+    private final KPIService pippo;
 
     public KPIController(KPIService kpiService) {
-        this.kpiService = kpiService;
+        this.pippo = kpiService;
     }
 
     @GetMapping
     public KpiDTO pippo() {
-        return kpiService.pippo();
+        return pippo.pippo();
     }
 
 
