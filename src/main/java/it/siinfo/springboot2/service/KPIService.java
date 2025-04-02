@@ -53,7 +53,7 @@ public class KPIService {
                 0);
 
 
-        return new KpiDTO(totalOrders, totalSuppliers, totalProducts, averagePrice, totalOrders);
+        return new KpiDTO(totalOrders, totalSuppliers, totalProducts, averagePrice, averageQuantityPerProduct);
     }
 
 

@@ -1,10 +1,13 @@
 package it.siinfo.springboot2.dto;
 
+import jakarta.validation.constraints.Min;
+
 public class SupplierProductDTO {
 
     private Long supplierId;
     private Long productId;
     private Double price;
+    @Min (1)
     private Integer quantity;
 
     public SupplierProductDTO() {

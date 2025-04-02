@@ -6,7 +6,7 @@ public class KpiDTO {
     private Long totalSuppliers;
     private Long totalProducts;
     private Double averagePrice;
-    private Long averageQuantityPerProduct;
+    private Double averageQuantityPerProduct;
 
     public KpiDTO() {
     }
@@ -15,7 +15,7 @@ public class KpiDTO {
                   Long totalSuppliers,
                   Long totalProducts,
                   Double averagePrice,
-                  Long averageQuantityPerProduct) {
+                  Double averageQuantityPerProduct) {
         this.totalOrders = totalOrders;
         this.totalSuppliers = totalSuppliers;
         this.totalProducts = totalProducts;
@@ -55,11 +55,11 @@ public class KpiDTO {
         this.averagePrice = averagePrice;
     }
 
-    public Long getAverageQuantityPerProduct() {
+    public Double getAverageQuantityPerProduct() {
         return averageQuantityPerProduct;
     }
 
-    public void setAverageQuantityPerProduct(Long averageQuantityPerProduct) {
+    public void setAverageQuantityPerProduct(Double averageQuantityPerProduct) {
         this.averageQuantityPerProduct = averageQuantityPerProduct;
     }
 }

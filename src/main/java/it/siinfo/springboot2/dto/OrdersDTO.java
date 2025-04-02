@@ -15,6 +15,7 @@ public class OrdersDTO {
     private String product;
     @NotNull(message = "pippo")
     @NotBlank(message = "pippo")
+    @Min (1)
     private Double amount;
 
     private Timestamp orderDate;
