@@ -1,6 +1,7 @@
 package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.ProductDTO;
+import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Product;
 import it.siinfo.springboot2.entity.Supplier;
 import it.siinfo.springboot2.entity.SupplierProduct;
@@ -55,7 +56,7 @@ public class ProductService {
 
     public void updateProduct(Long id,
                               ProductDTO productDTO) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException (
                 "Prodotto non trovata"));
 
         ProductDTO productToChange = productMapper.toProductDto(product);
@@ -74,7 +75,7 @@ public class ProductService {
     }
 
     public ProductDTO findById(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Prodotto non trovato"));
         return productMapper.toProductDto(product);
     }

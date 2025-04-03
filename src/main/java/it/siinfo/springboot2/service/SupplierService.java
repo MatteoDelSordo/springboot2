@@ -1,6 +1,7 @@
 package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.SupplierDTO;
+import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Product;
 import it.siinfo.springboot2.entity.Supplier;
 import it.siinfo.springboot2.entity.SupplierProduct;
@@ -52,7 +53,7 @@ public class SupplierService {
 
     public SupplierDTO findById(Long id) {
 
-        return supplierRepository.findById(id).map(supplierMapper::toSupplierDTO).orElseThrow(() -> new EntityNotFoundException(
+        return supplierRepository.findById(id).map(supplierMapper::toSupplierDTO).orElseThrow(() -> new ResourceNotFoundException (
                 "supplier non trovato"));
     }
 
@@ -66,7 +67,7 @@ public class SupplierService {
     public void updateSupplier(Long id,
                                SupplierDTO supplierDTO) {
 
-        Supplier supplier = supplierRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        Supplier supplier = supplierRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Entità non trovata"));
 
         SupplierDTO supplierDaModificare = supplierMapper.toSupplierDTO(supplier);

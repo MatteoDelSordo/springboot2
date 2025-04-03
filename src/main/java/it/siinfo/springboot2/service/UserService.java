@@ -1,6 +1,7 @@
 package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.UsersDTO;
+import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.mapper.UsersMapper;
 import it.siinfo.springboot2.repository.UserRepository;
@@ -45,7 +46,7 @@ public class UserService {
     public Users findUserById(Long id) {
         Optional<Users> optionalUsers = userRepository.findById(id);
         if (optionalUsers.isEmpty()) {
-            throw new EntityNotFoundException("Utente non trovato");
+            throw new ResourceNotFoundException("Utente non trovato");
         }
         return optionalUsers.get();
     }
@@ -69,7 +70,7 @@ public class UserService {
 
         Optional<Users> optionalUsers = userRepository.findById(id);
         if (optionalUsers.isEmpty()) {
-            throw new EntityNotFoundException("qualcosa è andato storto");
+            throw new ResourceNotFoundException ("qualcosa è andato storto");
         }
         Users paolino = optionalUsers.get();
         paolino.setName(userDto.getName());
@@ -83,7 +84,7 @@ public class UserService {
 
         Optional<Users> optionalUsers = userRepository.findById(id);
         if (optionalUsers.isEmpty()) {
-            throw new EntityNotFoundException("qualcosa è andato storto");
+            throw new ResourceNotFoundException("qualcosa è andato storto");
         }
         Users paolino = optionalUsers.get();
         paolino.setPassword(userDto.getPassword());

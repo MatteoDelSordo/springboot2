@@ -33,27 +33,37 @@ public class KPIService {
 
     public KpiDTO pippo() {
 
-        Long totalOrders = orderRepository.count();
-        Long totalSuppliers = supplierRepository.count();
-        Long totalProducts = productRepository.count();
-        List<SupplierProduct> supplierProductList = supplierProductRepository.findAll();
+        Long totalOrders = orderRepository.count ();
+        Long totalSuppliers = supplierRepository.count ();
+        Long totalProducts = productRepository.count ();
+        List<SupplierProduct> supplierProductList = supplierProductRepository.findAll ();
 
         Double averagePrice = 0.00;
 
-        for (SupplierProduct supplierProduct : supplierProductList) {
-            averagePrice = averagePrice + supplierProduct.getPrice();
+        try {
+
+            for (SupplierProduct supplierProduct : supplierProductList) {
+                averagePrice = averagePrice + supplierProduct.getPrice ();
+            }
+            averagePrice = averagePrice / supplierProductList.size ();
+        } catch (ArithmeticException arithmeticException) {
+            System.out.println ("Qualcosa nel calcolo della media del prezzo è andata storta");
         }
-        averagePrice = averagePrice / supplierProductList.size();
 
 //        List<Double> list = supplierProductList.stream().map(SupplierProduct::getPrice).collect(Collectors.toList());
 //        Double averagePrice = list.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
 
-        Double averageQuantityPerProduct =
-                supplierProductList.stream().map(SupplierProduct::getQuantity).mapToInt(value -> value).average().orElse(
-                0);
+        Double averageQuantityPerProduct = null;
+        try {
+
+            averageQuantityPerProduct = supplierProductList.stream ().map (SupplierProduct::getQuantity).mapToInt (value -> value).average ().orElse (
+                    0);
+        } catch (ArithmeticException arithmeticException) {
+            System.out.println ("Qualcosa nel calcolo della media della quantità prodotto è andato storto ");
+        }
 
 
-        return new KpiDTO(totalOrders, totalSuppliers, totalProducts, averagePrice, averageQuantityPerProduct);
+        return new KpiDTO (totalOrders, totalSuppliers, totalProducts, averagePrice, averageQuantityPerProduct);
     }
 
 

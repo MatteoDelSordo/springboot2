@@ -1,6 +1,7 @@
 package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.ShipmentDTO;
+import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Address;
 import it.siinfo.springboot2.entity.Orders;
 import it.siinfo.springboot2.entity.Shipment;
@@ -37,9 +38,9 @@ public class ShipmentService {
     public void createShipment(Long idOrders,
                                Long idAddress,
                                ShipmentDTO shipmentDTO) {
-        Orders order = ordersRepository.findById(idOrders).orElseThrow(() -> new EntityNotFoundException(
+        Orders order = ordersRepository.findById(idOrders).orElseThrow(() -> new ResourceNotFoundException(
                 "Entità non trovata"));
-        Address address = addressRepository.findById(idAddress).orElseThrow(() -> new EntityNotFoundException(
+        Address address = addressRepository.findById(idAddress).orElseThrow(() -> new ResourceNotFoundException(
                 "Entità non trovata"));
 
         Shipment shipment = shipmentMapper.toShipment(shipmentDTO);
@@ -54,7 +55,7 @@ public class ShipmentService {
 
     @Transactional
     public ShipmentDTO getShipmentById(Long id) {
-        Shipment shipment = shipmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        Shipment shipment = shipmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Shipment non trovato con ID: " + id));
         return shipmentMapper.toShipmentDto(shipment);
     }
@@ -68,7 +69,7 @@ public class ShipmentService {
     @Transactional
     public void updateShipment(Long id,
                                ShipmentDTO shipmentDTO) {
-        Shipment shipmentToUpdate = shipmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        Shipment shipmentToUpdate = shipmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Shipment non trovato con ID: " + id));
 
         shipmentToUpdate.setRackingNumber(shipmentDTO.getRackingNumber());
@@ -82,7 +83,7 @@ public class ShipmentService {
     @Transactional
     public void updateShipmentStatus(Long id,
                                      ShipmentDTO shipmentDTO) {
-        Shipment shipmentToUpdate = shipmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        Shipment shipmentToUpdate = shipmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Shipment con id: " + id + " non trovato"));
 
         shipmentToUpdate.setStatus(shipmentDTO.getStatus());
@@ -94,7 +95,7 @@ public class ShipmentService {
     @Transactional
     public ShipmentDTO getShipmentByOrderId(Long id) {
 
-        Orders orders = ordersRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("pippo"));
+        Orders orders = ordersRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("pippo"));
 
         return shipmentMapper.toShipmentDto(orders.getShipment());
 
@@ -104,11 +105,11 @@ public class ShipmentService {
     @Transactional
     public void deleteShipment(Long id) {
         if (!shipmentRepository.existsById(id)) {
-            throw new EntityNotFoundException("Shipment non trovato con ID: " + id);
+            throw new ResourceNotFoundException("Shipment non trovato con ID: " + id);
         }
         Shipment pippo = shipmentRepository.findById(id).
                 orElseThrow(()
-                -> new EntityNotFoundException("Leva le dita dal naso"));
+                -> new ResourceNotFoundException ("Leva le dita dal naso"));
 
         Orders orders = pippo.getOrders();
         orders.setShipment(null);

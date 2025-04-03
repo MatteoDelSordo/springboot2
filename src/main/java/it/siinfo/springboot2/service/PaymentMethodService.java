@@ -1,6 +1,7 @@
 package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.PaymentMethodDTO;
+import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.PaymentMethod;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.mapper.PaymentMethodMapper;
@@ -23,56 +24,62 @@ public class PaymentMethodService {
     private final PaymentMethodRepository paymentMethodRepository;
 
     @Autowired
-    public PaymentMethodService(PaymentMethodRepository paymentMethodRepository,
-                                UserRepository userRepository,
-                                PaymentMethodMapper paymentMethodMapper) {
+    public PaymentMethodService (PaymentMethodRepository paymentMethodRepository,
+                                 UserRepository userRepository,
+                                 PaymentMethodMapper paymentMethodMapper) {
         this.paymentMethodRepository = paymentMethodRepository;
         this.userRepository = userRepository;
         this.paymentMethodMapper = paymentMethodMapper;
     }
+
     @Transactional
-    public void createPaymentMethodForUser(Long id,
-                                           PaymentMethodDTO paymentMethodDTO) {
-        Optional<Users> optionalUsers = userRepository.findById(id);
-        if (optionalUsers.isEmpty()) {
-            throw new EntityNotFoundException("User con id: " + id + " non trovato");
+    public void createPaymentMethodForUser (Long id,
+                                            PaymentMethodDTO paymentMethodDTO) {
+        Optional<Users> optionalUsers = userRepository.findById (id);
+        if (optionalUsers.isEmpty ()) {
+            throw new ResourceNotFoundException ("User con id: " + id + " non trovato");
         }
-        Users user = optionalUsers.get();
-        PaymentMethod paymentMethod = paymentMethodMapper.toPaymentMethod(paymentMethodDTO);
-        paymentMethod.setUser(user);
-        paymentMethodRepository.save(paymentMethod);
+        Users user = optionalUsers.get ();
+        PaymentMethod paymentMethod = paymentMethodMapper.toPaymentMethod (paymentMethodDTO);
+        paymentMethod.setUser (user);
+        paymentMethodRepository.save (paymentMethod);
 
     }
+
+
     @Transactional
-    public void deletePaymentMethodForUser(Long id) {
-        paymentMethodRepository.delete(id);
+    public void deletePaymentMethodForUser (Long id) {
+        paymentMethodRepository.delete (id);
     }
+
     @Transactional
-    public List<PaymentMethodDTO> getPaymentMethodForUser(Long id) {
+    public List<PaymentMethodDTO> getPaymentMethodForUser (Long id) {
 
-        List<PaymentMethod> list = paymentMethodRepository.findAllByUserId(id);
+        List<PaymentMethod> list = paymentMethodRepository.findAllByUserId (id);
 
-        return paymentMethodMapper.toPaymentMethodListDto(list);
+        return paymentMethodMapper.toPaymentMethodListDto (list);
     }
+
     @Transactional
-    public void update(Long id,
-                       PaymentMethodDTO paymentMethodDTO) {
+    public void update (Long id,
+                        PaymentMethodDTO paymentMethodDTO) {
 
-        Optional<PaymentMethod> optionalPayment = paymentMethodRepository.findById(id);
+        Optional<PaymentMethod> optionalPayment = paymentMethodRepository.findById (id);
 
-        if (optionalPayment.isEmpty()) {
-            throw new EntityNotFoundException("Metodo di pagamento non trovato");
+        if (optionalPayment.isEmpty ()) {
+            throw new ResourceNotFoundException ("Metodo di pagamento non trovato");
         }
-        PaymentMethod paymentMethodToChange = optionalPayment.get();
-        paymentMethodToChange.setCardNumber(paymentMethodDTO.getCardNumber());
-        paymentMethodToChange.setExpirationDate(paymentMethodDTO.getExpirationDate());
-        paymentMethodToChange.setCvv(paymentMethodDTO.getCvv());
-        paymentMethodRepository.save(paymentMethodToChange);
+        PaymentMethod paymentMethodToChange = optionalPayment.get ();
+        paymentMethodToChange.setCardNumber (paymentMethodDTO.getCardNumber ());
+        paymentMethodToChange.setExpirationDate (paymentMethodDTO.getExpirationDate ());
+        paymentMethodToChange.setCvv (paymentMethodDTO.getCvv ());
+        paymentMethodRepository.save (paymentMethodToChange);
 
     }
+
     @Transactional
-    public List<PaymentMethod> getAllPayments(){
-        return paymentMethodRepository.findAll();
+    public List<PaymentMethod> getAllPayments () {
+        return paymentMethodRepository.findAll ();
     }
 
 }
