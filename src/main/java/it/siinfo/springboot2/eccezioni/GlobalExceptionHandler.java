@@ -18,6 +18,9 @@ public class GlobalExceptionHandler {
     }
 
 
+
+
+@ExceptionHandler
     public ResponseEntity<ErrorResponseDTO> objectNotFoundException (ResourceNotFoundException exception) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO ("Non esiste un record con questo valore. ",
                 exception.getMessage ());

@@ -8,6 +8,8 @@ import it.siinfo.springboot2.mapper.PaymentMethodMapper;
 import it.siinfo.springboot2.repository.PaymentMethodRepository;
 import it.siinfo.springboot2.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @Service
 public class PaymentMethodService {
 
+    private static final Logger log = LoggerFactory.getLogger (PaymentMethodService.class);
     private final UserRepository userRepository;
     private final PaymentMethodMapper paymentMethodMapper;
     private final PaymentMethodRepository paymentMethodRepository;
@@ -67,6 +70,7 @@ public class PaymentMethodService {
         Optional<PaymentMethod> optionalPayment = paymentMethodRepository.findById (id);
 
         if (optionalPayment.isEmpty ()) {
+            log.warn ("Qualcosa si è rotto");
             throw new ResourceNotFoundException ("Metodo di pagamento non trovato");
         }
         PaymentMethod paymentMethodToChange = optionalPayment.get ();

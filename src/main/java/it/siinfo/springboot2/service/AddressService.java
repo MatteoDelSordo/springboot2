@@ -37,6 +37,7 @@ public class AddressService {
         try {
 
             List<Address> listdto = addressRepository.findAll ();
+            log.info ("La lista degli indirizzi è stata chiamata{}", listdto);
             return listdto.stream ().map (addressMapper::toAddressDto).toList ();
         } catch (Exception e) {
             log.warn ("Errore nella visualizzazione della lista degli indirizzi {}", e.getMessage ());
@@ -50,9 +51,12 @@ public class AddressService {
     public AddressDTO getAddressById (Long id) {
         Optional<Address> optionalAddress = addressRepository.findById (id);
         if (optionalAddress.isEmpty ()) {
+            log.info ("L'indirizzo che è stato chiamato è tornato vuoto");
             throw new ResourceNotFoundException ("Indirizzo non trovato");
         }
         Address address = optionalAddress.get ();
+
+        log.info ("Questo indirizzo {} è stato cercato", address);
 
         return addressMapper.toAddressDto (address);
     }
@@ -62,6 +66,7 @@ public class AddressService {
 
         Optional<Users> usersOptional = userRepository.findById (id);
         if (usersOptional.isEmpty ()) {
+            log.info ("Qualcosa è andato storto nella ricerca dell indirizzo dell utente con id {} e non è stato possibile trovarlo",id);
             throw new ResourceNotFoundException ("Utente non trovato nella ricerca dell indirizzo");
         }
         Users user = usersOptional.get ();
@@ -122,6 +127,7 @@ public class AddressService {
         userRepository.save (user);
         addressRepository.deleteById (id);
     }
+
 
 
 }

@@ -39,7 +39,6 @@ public class OrdersService {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.ordersMapper = ordersMapper;
-
         this.usersMapper = usersMapper;
     }
 
@@ -142,8 +141,9 @@ public class OrdersService {
 
         try {
 
-            Users users = userRepository.findById (userId).orElseThrow (() -> new ResourceNotFoundException (
-                    "Utente con id: " + userId + " non trovato"));
+            Users users = userRepository.findById (userId)
+                    .orElseThrow (() -> new ResourceNotFoundException
+                            ("Utente con id: " + userId + " non trovato"));
 
             List<Orders> ordersList = orderRepository.findAllByUsers_Id (userId);
 

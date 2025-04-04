@@ -14,6 +14,8 @@ import it.siinfo.springboot2.repository.ProductRepository;
 import it.siinfo.springboot2.repository.SupplierProductRepository;
 import it.siinfo.springboot2.repository.SupplierRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ import java.util.Optional;
 @Service
 public class SupplierProductService {
 
+
+    private static final Logger log = LoggerFactory.getLogger (SupplierProductService.class);
     private final SupplierProductRepository supplierProductRepository;
     private final SupplierProductMapper supplierProductMapper;
     private final ProductRepository productRepository;

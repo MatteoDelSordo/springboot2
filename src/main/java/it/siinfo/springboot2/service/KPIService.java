@@ -6,6 +6,8 @@ import it.siinfo.springboot2.repository.OrderRepository;
 import it.siinfo.springboot2.repository.ProductRepository;
 import it.siinfo.springboot2.repository.SupplierProductRepository;
 import it.siinfo.springboot2.repository.SupplierRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class KPIService {
 
+    private static final Logger log = LoggerFactory.getLogger (KPIService.class);
     final OrderRepository orderRepository;
     final SupplierRepository supplierRepository;
     final ProductRepository productRepository;
@@ -44,6 +47,7 @@ public class KPIService {
 
             for (SupplierProduct supplierProduct : supplierProductList) {
                 averagePrice = averagePrice + supplierProduct.getPrice ();
+
             }
             averagePrice = averagePrice / supplierProductList.size ();
         } catch (ArithmeticException arithmeticException) {
