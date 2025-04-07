@@ -82,8 +82,12 @@ public class PaymentMethodService {
     }
 
     @Transactional
-    public List<PaymentMethod> getAllPayments () {
-        return paymentMethodRepository.findAll ();
+    public List<PaymentMethodDTO> getAllPayments () {
+
+        List<PaymentMethod> pippo = paymentMethodRepository.findAll ();
+
+        return paymentMethodMapper.toPaymentMethodListDto (pippo);
+
     }
 
 }
