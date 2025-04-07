@@ -2,6 +2,8 @@ package it.siinfo.springboot2.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Product {
     @Id
@@ -10,31 +12,32 @@ public class Product {
     private Long id;
     @Column(nullable = false)
     private String nome;
+    @ManyToMany
+    Set<Category> categories;
 
 
-
-    public Product() {
+    public Product () {
     }
 
-    public Product(String nome) {
+    public Product (String nome) {
         this.nome = nome;
 
 
     }
 
-    public Long getId() {
+    public Long getId () {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId (Long id) {
         this.id = id;
     }
 
-    public String getNome() {
+    public String getNome () {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome (String nome) {
         this.nome = nome;
     }
 
