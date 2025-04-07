@@ -124,6 +124,7 @@ public class ShipmentService {
         shipmentDTO.setOrdersId(null);
 
         Shipment shipment = shipmentMapper.toShipment(shipmentDTO);
+
         shipmentRepository.deleteById(id);
 
     }

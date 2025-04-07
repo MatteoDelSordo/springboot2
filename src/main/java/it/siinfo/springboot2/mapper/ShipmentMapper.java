@@ -11,14 +11,16 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ShipmentMapper {
 
-    Shipment toShipment(ShipmentDTO shipmentDTO);
+    @Mapping(target = "orders", source = "ordersId")
+    @Mapping(target = "address", source = "addressId")
+    Shipment toShipment (ShipmentDTO shipmentDTO);
 
     @Mapping(target = "ordersId", source = "orders.id")
     @Mapping(target = "addressId", source = "address.id")
-    ShipmentDTO toShipmentDto(Shipment shipment);
+    ShipmentDTO toShipmentDto (Shipment shipment);
 
-    List<Shipment> toShipmentList(List<ShipmentDTO> shipmentDTOList);
+    List<Shipment> toShipmentList (List<ShipmentDTO> shipmentDTOList);
 
-    List<ShipmentDTO> toShipmentListDto(List<Shipment> shipmentList);
+    List<ShipmentDTO> toShipmentListDto (List<Shipment> shipmentList);
 
 }
