@@ -11,7 +11,7 @@ public class Category {
     private Long id;
     @Column
     private String name;
-    @ManyToMany
+    @ManyToMany(mappedBy = "categories")
     Set<Product> products;
 
     public Category () {

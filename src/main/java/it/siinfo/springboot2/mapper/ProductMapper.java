@@ -4,6 +4,8 @@ import it.siinfo.springboot2.dto.ProductDTO;
 import it.siinfo.springboot2.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -18,4 +20,5 @@ public interface ProductMapper {
     List<Product> toProductList (List<ProductDTO> productDTOs);
 
     List<ProductDTO> toProductDtoList (List<Product> products);
+
 }
