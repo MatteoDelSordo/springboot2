@@ -16,8 +16,7 @@ import java.util.List;
 public interface CategoryController {
 
 
-    public void create (@RequestBody
-                        CategoryDTO);
+    public void create (@RequestBody CategoryDTO categoryDTO);
 
 
     public void addCategoryToProduct (@PathVariable Long proId,
@@ -28,14 +27,14 @@ public interface CategoryController {
     public void updateCategory (@PathVariable Long id,
                                 @RequestBody CategoryDTO categoryDTO);
 
-public void deleteCategoryToProduct(@PathVariable Long catId, @PathVariable Long prodId)
+    public void deleteCategoryToProduct (@PathVariable Long catId,
+                                         @PathVariable Long prodId);
 
-    public List<CategoryDTO> findProdByCategory(@PathVariable Long id);
+    public List<CategoryDTO> findCategoryByProdId (@PathVariable Long id);
 
-    public List<ProductDTO> findProdByCat(@PathVariable Long id);
+    public List<ProductDTO> findProdByCat (@PathVariable Long id);
 
-    public List<ProductDTO> getAllWhereCatIsNotPresent();
-
+    public List<ProductDTO> getAllWhereCatIsNotPresent ();
 
 
 }
