@@ -1,6 +1,6 @@
 package it.siinfo.springboot2.service;
 
-import it.siinfo.springboot2.dto.Long;
+import it.siinfo.springboot2.dto.CategoryDTO;
 import it.siinfo.springboot2.dto.ProductDTO;
 import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Category;
@@ -35,9 +35,9 @@ public class CategoryService {
         this.productMapper = productMapper;
     }
 
-    public void create (Long aLong) {
+    public void create (CategoryDTO categoryDTO) {
 
-        categoryRepository.save (categoryMapper.toCategory (aLong));
+        categoryRepository.save (categoryMapper.toCategory (categoryDTO));
 
     }
 
@@ -60,21 +60,21 @@ public class CategoryService {
 
     }
 
-    public void updateCategory (java.lang.Long id,
-                                @NotNull Long aLong) {
+    public void updateCategory (Long id,
+                                @NotNull CategoryDTO categoryDTO) {
 
         Category category = categoryRepository.findById (id).orElseThrow (() -> new ResourceNotFoundException (
                 "Categoria non esistente"));
 
-        Long categoryToSave = categoryMapper.toCategoryDto (category);
-        categoryToSave.setName (aLong.getName ());
+        CategoryDTO categoryToSave = categoryMapper.toCategoryDto (category);
+        categoryToSave.setName (categoryDTO.getName ());
         categoryRepository.save (categoryMapper.toCategory (categoryToSave));
 
     }
 
-    public List<Long> getAllCategory () {
+    public List<CategoryDTO> getAllCategory () {
         List<Category> list = categoryRepository.findAll ();
-        List<Long> dtoList = categoryMapper.toCategoryDtoList (list);
+        List<CategoryDTO> dtoList = categoryMapper.toCategoryDtoList (list);
         return dtoList;
 
     }
@@ -93,7 +93,7 @@ public class CategoryService {
     }
 
 
-    public List<Long> trovaUnNomePerStoMetodo (java.lang.Long id) {
+    public List<CategoryDTO> trovaUnNomePerStoMetodo (java.lang.Long id) {
 
         return categoryMapper.toCategoryDtoList (categoryRepository.findByProducts_Id (id));
 
@@ -137,7 +137,7 @@ public class CategoryService {
 
     }
 
-    public List<Long> findAllCategoryWhereProductIsNotPresent () {
+    public List<CategoryDTO> findAllCategoryWhereProductIsNotPresent () {
 
         return categoryMapper.toCategoryDtoList (categoryRepository.findByProductsNull ());
 
@@ -153,7 +153,8 @@ public class CategoryService {
 
         List<Product> productList = productRepository.findAll ();
 
-        List<Product> prova = productList.stream ().filter (p -> p.getCategories ().equals (product.getCategories ())).toList ();
+        List<Product> prova =
+                productList.stream ().filter (p -> p.getCategories ().equals (product.getCategories ())).toList ();
 
         return productMapper.toProductDtoList (prova);
 
