@@ -1,6 +1,6 @@
 package it.siinfo.springboot2.service;
 
-import it.siinfo.springboot2.dto.CategoryDTO;
+import it.siinfo.springboot2.dto.Long;
 import it.siinfo.springboot2.dto.ProductDTO;
 import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Category;
@@ -9,12 +9,12 @@ import it.siinfo.springboot2.mapper.CategoryMapper;
 import it.siinfo.springboot2.mapper.ProductMapper;
 import it.siinfo.springboot2.repository.CategoryRepository;
 import it.siinfo.springboot2.repository.ProductRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -35,75 +35,65 @@ public class CategoryService {
         this.productMapper = productMapper;
     }
 
-    public void create (CategoryDTO categoryDTO) {
+    public void create (Long aLong) {
 
-        categoryRepository.save (categoryMapper.toCategory (categoryDTO));
+        categoryRepository.save (categoryMapper.toCategory (aLong));
 
     }
 
 
-    public void addCategoryToProduct (Long prodId,
-                                      Long catId) {
+    public void addCategoryToProduct (java.lang.Long prodId,
+                                      java.lang.Long catId) {
         Product product = productRepository.findById (prodId).orElseThrow (() -> new ResourceNotFoundException (
                 "Prodotto non trovato"));
+
         Category category = categoryRepository.findById (catId).orElseThrow (() -> new ResourceNotFoundException (
                 "Categoria non presente"));
 
-//        product.getCategories ().add (category);
-        ProductDTO productDTO = productMapper.toProductDto (product);
-        CategoryDTO categoryDTO = categoryMapper.toCategoryDto (category);
+        Set<Category> categorySet = new HashSet<> (Set.of ());
 
-        productDTO.getCategoriesDTO ().add (categoryDTO);
-//        Product prodoctToSave = productMapper.toProduct (productDTO);
-        productRepository.save (productMapper.toProduct (productDTO));
+        categorySet.add (category);
 
-    }
+        product.getCategories ().add (category);
 
-    public List<CategoryDTO> getAllCategory () {
-        List<Category> list = categoryRepository.findAll ();
-
-        return categoryMapper.toCategoryDtoList (list);
+        productRepository.save (product);
 
     }
 
-    public void updateCategory (Long id,
-                                CategoryDTO categoryDTO) {
+    public void updateCategory (java.lang.Long id,
+                                @NotNull Long aLong) {
 
         Category category = categoryRepository.findById (id).orElseThrow (() -> new ResourceNotFoundException (
                 "Categoria non esistente"));
 
-        CategoryDTO categoryToSave = categoryMapper.toCategoryDto (category);
-        categoryToSave.setName (categoryDTO.getName ());
+        Long categoryToSave = categoryMapper.toCategoryDto (category);
+        categoryToSave.setName (aLong.getName ());
         categoryRepository.save (categoryMapper.toCategory (categoryToSave));
 
     }
 
-    public void deleteCategory (Long id) {
+    public List<Long> getAllCategory () {
+        List<Category> list = categoryRepository.findAll ();
+        List<Long> dtoList = categoryMapper.toCategoryDtoList (list);
+        return dtoList;
+
+    }
+
+    public void deleteCategory (java.lang.Long id) {
 
         categoryRepository.deleteById (id);
 
     }
 
 
-    public void deleteCategoryToProduct (Long prodId,
-                                         Long catId) {
-        Product product = productRepository.findById (prodId).orElseThrow (() -> new ResourceNotFoundException (
-                "Prodotto non trovato"));
-        Category category = categoryRepository.findById (catId).orElseThrow (() -> new ResourceNotFoundException (
-                "Categoria non presente"));
-
-//        product.getCategories ().add (category);
-        ProductDTO productDTO = productMapper.toProductDto (product);
-        CategoryDTO categoryDTO = categoryMapper.toCategoryDto (category);
-
-        productDTO.getCategoriesDTO ().remove (categoryDTO);
-//        Product prodoctToSave = productMapper.toProduct (productDTO);
-        productRepository.save (productMapper.toProduct (productDTO));
+    public void deleteCategoryToProduct (java.lang.Long prodId,
+                                         java.lang.Long catId) {
+        categoryRepository.deleteProductCategory (prodId, catId);
 
     }
 
-    //    trova le categorie associate a un id di un prodotto
-    public List<CategoryDTO> trovaUnNomePerStoMetodo (Long id) {
+
+    public List<Long> trovaUnNomePerStoMetodo (java.lang.Long id) {
 
         return categoryMapper.toCategoryDtoList (categoryRepository.findByProducts_Id (id));
 
@@ -111,7 +101,7 @@ public class CategoryService {
 
 
     // trova i prodotti appartenenti a una categoria
-    public List<ProductDTO> trovaUnNomeAncheAQuesto (Long id) {
+    public List<ProductDTO> trovaUnNomeAncheAQuesto (java.lang.Long id) {
 
         return productMapper.toProductDtoList (productRepository.findByCategories_Id (id));
 
@@ -119,8 +109,7 @@ public class CategoryService {
 
     public List<ProductDTO> getAllWhereCategoryIsNotPresent () {
 
-        return productRepository.findByCategories_IdNull ().stream ().map (productMapper::toProductDto).collect (
-                Collectors.toList ());
+        return productMapper.toProductDtoList (productRepository.findByCategories_IdNull ());
 
 //        List<ProductDTO> listDaCIclare = productMapper.toProductDtoList (productRepository.findAll ());
 //
@@ -148,47 +137,39 @@ public class CategoryService {
 
     }
 
-    public List<CategoryDTO> findAllCategoryWhereProductIsNotPresent () {
+    public List<Long> findAllCategoryWhereProductIsNotPresent () {
 
         return categoryMapper.toCategoryDtoList (categoryRepository.findByProductsNull ());
 
     }
 
-//aiuto, questa non sono proprio stato in grado di farla.
-    public List<ProductDTO> productWithSameCategory (Long prodId) {
 
-//        ProductDTO productDTO =
-//                productMapper.toProductDto (productRepository.findById (prodId).orElseThrow (() -> new
-//                ResourceNotFoundException (
-//                "Prodotto non esistente")));
-//
-//        Set<CategoryDTO> categoryDTOList = productDTO.getCategoriesDTO ();
-//
-//        List<ProductDTO> dtoList = productMapper.toProductDtoList (productRepository.findAll ());
-//
-//        Set<CategoryDTO> categoryDTOLista = new HashSet<> ();
-//
-//        for (ProductDTO dto :dtoList) {
-//           CategoryDTO categoryDTO = (CategoryDTO) dto.getCategoriesDTO ();
-//            categoryDTOLista.add ();
-//
-//        }
+    public List<ProductDTO> productWithSameCategory (java.lang.Long productId) {
 
-        return productRepository.findRelatedProducts (prodId);
+        Product product = productRepository.findById (productId).orElseThrow (() -> new ResourceNotFoundException (
+                "Prodotto non trovato"));
+
+        Set<Category> categorySetList = product.getCategories ();
+
+        List<Product> productList = productRepository.findAll ();
+
+        List<Product> prova = productList.stream ().filter (p -> p.getCategories ().equals (product.getCategories ())).toList ();
+
+        return productMapper.toProductDtoList (prova);
+
     }
 
 
-    public void addMultipleCategoriesToProduct(Long productId, Set<Long> category) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Prodotto non trovato"));
+    public void addMultipleCategoriesToProduct (java.lang.Long productId,
+                                                Set<java.lang.Long> category) {
+        Product product = productRepository.findById (productId).orElseThrow (() -> new ResourceNotFoundException (
+                "Prodotto non trovato"));
 
-        Set<Category> categories = new HashSet<>(categoryRepository.findAllById(category));
-        product.getCategories().addAll(categories);
+        Set<Category> categorieDaAggiungere = new HashSet<> (categoryRepository.findAllById (category));
+        product.getCategories ().addAll (categorieDaAggiungere);
 
-        productRepository.save(product);
+        productRepository.save (product);
     }
-
-
 
 
 }

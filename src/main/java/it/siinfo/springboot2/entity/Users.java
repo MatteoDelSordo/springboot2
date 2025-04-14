@@ -3,7 +3,6 @@ package it.siinfo.springboot2.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.sql.Timestamp;
 
 
@@ -22,7 +21,7 @@ public class Users {
     @CreationTimestamp
     private Timestamp createdAt;
     @Column
-    private Long phoneNumber;
+    private String phoneNumber;
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
     @JoinColumn(name = "address_id")
@@ -35,12 +34,14 @@ public class Users {
                  String password,
                  String eMail,
                  String name,
-                 Address address) {
+                 Address address,
+                 String phoneNumber ) {
         this.createdAt = createdAt;
         this.password = password;
         this.eMail = eMail;
         this.name = name;
         this.address = address;
+        this.phoneNumber = phoneNumber;
 
     }
 
@@ -85,11 +86,11 @@ public class Users {
         this.createdAt = createdAt;
     }
 
-    public Long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

@@ -1,10 +1,8 @@
 package it.siinfo.springboot2.dto;
 
-import it.siinfo.springboot2.entity.Address;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-
+import org.hibernate.annotations.CreationTimestamp;
 import java.sql.Timestamp;
 
 public class UsersDTO {
@@ -21,15 +19,17 @@ public class UsersDTO {
     @Pattern(regexp = "^[A-Za-z]+$", message = "Il nome deve contenere solo lettere")
     private String name;
 
-    @NotBlank(message = "Il campo di timesStamp è obbligatorio")
-    @NotNull(message = "Il campo di timesStamp è obbligatorio")
+    @CreationTimestamp
+//    Il @NotNull non è necessario dato che il dato viene gestito in automatico grazie a @CreationTimestamp,
+//    anzi non va proprio messo, se lo si mette va in errore perchè lo richiede obbligatoriamente e va inserito a mano.
     private Timestamp createdAt;
 
     @NotNull(message = "Il numero di telefono è obbligatorio")
-    @NotBlank(message = "Il numero di telefono è obbligatorio")
-    @Max(value = 9, message = "numero di telefono non valido")
-    @Min(value = 9, message = "numero di telefono non valido")
-    private Integer phoneNumber;
+    @Size(min = 10, max = 10, message = "Il numero di telefono puo contenere solo 10 cifre")
+//    @Max(value = 11, message = "numero di telefono troppo lungo")
+//    @Min(value = 9, message = "numero di telefono troppo corto")
+    @Pattern(regexp = "\\d+", message = "Il campo puo contenere solo numeri")
+    private String phoneNumber;
 
 
     private AddressDTO address;
@@ -39,7 +39,7 @@ public class UsersDTO {
 
     }
 
-    public UsersDTO (Integer phoneNumber,
+    public UsersDTO (String phoneNumber,
                      Timestamp createdAt,
                      String eMail,
                      String name,
@@ -85,11 +85,11 @@ public class UsersDTO {
         this.createdAt = createdAt;
     }
 
-    public Integer getPhoneNumber () {
+    public String getPhoneNumber () {
         return phoneNumber;
     }
 
-    public void setPhoneNumber (Integer phoneNumber) {
+    public void setPhoneNumber (String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

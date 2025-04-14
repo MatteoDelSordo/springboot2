@@ -20,86 +20,84 @@ import java.util.stream.Collectors;
 public class UserService {
 
     final UserRepository userRepository;
-    private ModelMapper mm;
     private UsersMapper usersMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository,
-                       ModelMapper mm,
-                       UsersMapper usersMapper) {
+    public UserService (UserRepository userRepository,
+                        UsersMapper usersMapper) {
         this.userRepository = userRepository;
-        this.mm = mm;
         this.usersMapper = usersMapper;
     }
 
     @Transactional
-    public List<Users> getUsers() {
-        return userRepository.findAll();
+    public List<Users> getUsers () {
+        return userRepository.findAll ();
     }
 
     @Transactional
-    public List<Users> metodoJpa() {
-        return userRepository.findAllByOrderByNameAsc();
+    public List<Users> metodoJpa () {
+        return userRepository.findAllByOrderByNameAsc ();
     }
 
     @Transactional
-    public Users findUserById(Long id) {
-        Optional<Users> optionalUsers = userRepository.findById(id);
-        if (optionalUsers.isEmpty()) {
-            throw new ResourceNotFoundException("Utente non trovato");
+    public Users findUserById (Long id) {
+        Optional<Users> optionalUsers = userRepository.findById (id);
+        if (optionalUsers.isEmpty ()) {
+            throw new ResourceNotFoundException ("Utente non trovato");
         }
-        return optionalUsers.get();
+        return optionalUsers.get ();
     }
 
     @Transactional
-    public Users addUser(UsersDTO usersDto) {
+    public Users addUser (UsersDTO usersDto) {
 
-
-        return userRepository.save(usersMapper.toEntity(usersDto));
+        Users u = usersMapper.toEntity (usersDto);
+        return userRepository.save (u);
 
     }
 
     @Transactional
-    public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
+    public void deleteUserById (Long id) {
+        userRepository.deleteById (id);
     }
 
     @Transactional
-    public void updateNameAndEmailUserById(Long id,
-                                           UsersDTO userDto) {
+    public void updateNameAndEmailUserById (Long id,
+                                            UsersDTO userDto) {
 
-        Optional<Users> optionalUsers = userRepository.findById(id);
-        if (optionalUsers.isEmpty()) {
+        Optional<Users> optionalUsers = userRepository.findById (id);
+        if (optionalUsers.isEmpty ()) {
             throw new ResourceNotFoundException ("qualcosa è andato storto");
         }
-        Users paolino = optionalUsers.get();
-        paolino.setName(userDto.getName());
-        paolino.seteMail(userDto.geteMail());
-        userRepository.save(paolino);
+        Users paolino = optionalUsers.get ();
+        paolino.setName (userDto.getName ());
+        paolino.seteMail (userDto.geteMail ());
+        userRepository.save (paolino);
     }
 
     @Transactional
-    public void resetPwById(Long id,
-                            UsersDTO userDto) {
+    public void resetPwById (Long id,
+                             UsersDTO userDto) {
 
-        Optional<Users> optionalUsers = userRepository.findById(id);
-        if (optionalUsers.isEmpty()) {
-            throw new ResourceNotFoundException("qualcosa è andato storto");
+        Optional<Users> optionalUsers = userRepository.findById (id);
+        if (optionalUsers.isEmpty ()) {
+            throw new ResourceNotFoundException ("qualcosa è andato storto");
         }
-        Users paolino = optionalUsers.get();
-        paolino.setPassword(userDto.getPassword());
+        Users paolino = optionalUsers.get ();
+        paolino.setPassword (userDto.getPassword ());
     }
 
     @Transactional
-    public List<Users> getUserOrderedByName() {
-        List<Users> orderedList = userRepository.findAll();
+    public List<Users> getUserOrderedByName () {
+        List<Users> orderedList = userRepository.findAll ();
 
-        orderedList = orderedList.stream().sorted(Comparator.comparing(Users::getName)).collect(Collectors.toList());
+        orderedList =
+                orderedList.stream ().sorted (Comparator.comparing (Users::getName)).collect (Collectors.toList ());
         return orderedList;
     }
 
     @Transactional
-    public List<Users> getUserByName(String name) {
-        return userRepository.findByName(name);
+    public List<Users> getUserByName (String name) {
+        return userRepository.findByName (name);
     }
 }

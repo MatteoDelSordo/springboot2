@@ -8,8 +8,6 @@ import it.siinfo.springboot2.dto.ProductDTO;
 import it.siinfo.springboot2.service.ProductService;
 import it.siinfo.springboot2.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -30,6 +28,7 @@ public class ProductController {
     }
 
 
+
     @Operation(summary = "Recupera tutti i prodotti", description = "Restituisce una lista di tutti i prodotti presenti nel sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista prodotti restituita con successo")
@@ -38,6 +37,7 @@ public class ProductController {
     public List<ProductDTO> getAllProduct() {
         return productService.getAllProduct();
     }
+
 
 
     @Operation(summary = "Crea un nuovo prodotto", description = "Crea un nuovo prodotto nel sistema utilizzando i dati forniti nel DTO del prodotto.")
@@ -98,4 +98,9 @@ public class ProductController {
     public List<ProductDTO> getAllProductBySupId(@PathVariable Long id) {
         return productService.getAllProductOfSupplier(id);
     }
+//    @GetMapping(path = "/uncategorized")
+//
+//    public List<ProductDTO> getAllWhereCatIsNotPresent () {
+//        return productService.getAllWhereCategoryIsNotPresent ();
+//    }
 }

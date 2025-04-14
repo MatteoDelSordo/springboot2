@@ -25,9 +25,23 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategories_IdNull ();
 
 
-    @Query("SELECT p FROM Product p WHERE p.id IN (" +
-            "SELECT pc.product.id FROM ProductCategory pc WHERE pc.category.id IN (" +
-            "SELECT pc2.category.id FROM ProductCategory pc2 WHERE pc2.product.id = :prodId" +
-            ") ) AND p.id != :prodId")
-    List<ProductDTO> findRelatedProducts(@Param("prodId") Long prodId);
+//    @Query("SELECT p FROM Product p WHERE p.id IN (" +
+//            "SELECT pc.product.id FROM ProductCategory pc WHERE pc.category.id IN (" +
+//            "SELECT pc2.category.id FROM ProductCategory pc2 WHERE pc2.product.id = :prodId" +
+//            ") ) AND p.id != :prodId")
+//    List<ProductDTO> findRelatedProducts(@Param("prodId") Long prodId);
+
+    @Query("""
+    SELECT DISTINCT p FROM Product p
+    JOIN p.categories c
+    WHERE c.id IN (
+        SELECT c2.id FROM Product p2
+        JOIN p2.categories c2
+        WHERE p2.id = :productId
+    )
+""")
+    List<ProductDTO> findProductsWithSameCategories(@Param("productId") Long productId);
+
+
+
 }

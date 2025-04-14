@@ -1,24 +1,31 @@
 package it.siinfo.springboot2.mapper;
 
-import it.siinfo.springboot2.dto.CategoryDTO;
+import it.siinfo.springboot2.dto.Long;
 import it.siinfo.springboot2.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 
     @Mapping(target = "productsDTO", source = "products")
-    CategoryDTO toCategoryDto (Category category);
+    Long toCategoryDto (Category category);
 
     @Mapping(target = "products", source = "productsDTO")
-    Category toCategory (CategoryDTO categoryDTO);
+    Category toCategory (Long aLong);
 
-    List<Category> toCategoryList (List<CategoryDTO> categoryDTO);
 
-    List<CategoryDTO> toCategoryDtoList (List<Category> categorie);
+    List<Category> toCategoryList (List<Long> aLong);
+
+    Set<Category> toCategorySet (Set<Long> aLong);
+
+
+    List<Long> toCategoryDtoList (List<Category> categorie);
+
+    Set<Long> toCategoryDtoSet (Set<Category> categorie);
 
 
 }

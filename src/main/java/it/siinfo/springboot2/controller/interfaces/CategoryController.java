@@ -1,40 +1,42 @@
 package it.siinfo.springboot2.controller.interfaces;
 
-import it.siinfo.springboot2.dto.CategoryDTO;
+import it.siinfo.springboot2.dto.Long;
 import it.siinfo.springboot2.dto.ProductDTO;
-import it.siinfo.springboot2.entity.Product;
-import it.siinfo.springboot2.service.CategoryService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
-@RestController
-@RequestMapping(path = "/category")
+
 public interface CategoryController {
 
 
-    public void create (@RequestBody CategoryDTO categoryDTO);
+    public void create (@RequestBody Long aLong);
 
 
-    public void addCategoryToProduct (@PathVariable Long proId,
-                                      @PathVariable Long catId);
+    public void addCategoryToProduct (@PathVariable java.lang.Long proId,
+                                      @PathVariable java.lang.Long catId);
 
-    public List<CategoryDTO> getAllCategory ();
+    public List<Long> getAllCategory ();
 
-    public void updateCategory (@PathVariable Long id,
-                                @RequestBody CategoryDTO categoryDTO);
+    public void updateCategory (@PathVariable java.lang.Long id,
+                                @RequestBody Long aLong);
 
-    public void deleteCategoryToProduct (@PathVariable Long catId,
-                                         @PathVariable Long prodId);
+    public void deleteCategoryToProduct (@PathVariable java.lang.Long catId,
+                                         @PathVariable java.lang.Long prodId);
 
-    public List<CategoryDTO> findCategoryByProdId (@PathVariable Long id);
+    public List<Long> findCategoryByProdId (@PathVariable java.lang.Long id);
 
-    public List<ProductDTO> findProdByCat (@PathVariable Long id);
+    public List<ProductDTO> findProdByCat (@PathVariable java.lang.Long id);
 
     public List<ProductDTO> getAllWhereCatIsNotPresent ();
 
+    public List<it.siinfo.springboot2.dto.Long> findAllCategoryWhereProductIsNotPresent();
 
+    public List<ProductDTO> productWithSameCategory(java.lang.Long prodId);
+
+    public void addMultipleCategoriesToProduct(java.lang.Long prodId, Set<java.lang.Long> category);
+
+    public void deleteById(java.lang.Long id);
 }

@@ -11,15 +11,15 @@ public class ProductDTO {
     @NotNull
     private String nome;
 
-    Set<CategoryDTO> categoriesDTO;
+    Set<Long> categoriesId;
 
     public ProductDTO () {
     }
 
     public ProductDTO (String nome,
-                       Set<CategoryDTO> categoriesDTO) {
+                       Set<Long> categoriesId) {
         this.nome = nome;
-        this.categoriesDTO = categoriesDTO;
+        this.categoriesId = categoriesId;
     }
 
     public String getNome () {
@@ -30,12 +30,12 @@ public class ProductDTO {
         this.nome = nome;
     }
 
-    public Set<CategoryDTO> getCategoriesDTO () {
-        return categoriesDTO;
+    public Set<Long> getCategoriesId () {
+        return categoriesId;
     }
 
-    public void setCategoriesDTO (Set<CategoryDTO> categoriesDTO) {
-        this.categoriesDTO = categoriesDTO;
+    public void setCategoriesId (Set<Long> categoriesId) {
+        this.categoriesId = categoriesId;
     }
 }
 

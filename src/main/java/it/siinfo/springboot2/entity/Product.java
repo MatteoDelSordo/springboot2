@@ -1,5 +1,7 @@
 package it.siinfo.springboot2.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -13,11 +15,10 @@ public class Product {
     @Column(nullable = false)
     private String nome;
     @ManyToMany
-    @JoinTable(
-            name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-
+    @JsonManagedReference
+    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns =
+    @JoinColumn(name = "category_id"))
+    @Column
     Set<Category> categories;
 
 

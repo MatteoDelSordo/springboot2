@@ -1,5 +1,7 @@
 package it.siinfo.springboot2.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -11,6 +13,7 @@ public class Category {
     private Long id;
     @Column
     private String name;
+    @JsonBackReference
     @ManyToMany(mappedBy = "categories")
     Set<Product> products;
 
