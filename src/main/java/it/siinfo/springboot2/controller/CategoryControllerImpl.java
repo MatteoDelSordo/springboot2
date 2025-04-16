@@ -1,7 +1,7 @@
 package it.siinfo.springboot2.controller;
 
 import it.siinfo.springboot2.controller.interfaces.CategoryController;
-import it.siinfo.springboot2.dto.Long;
+import it.siinfo.springboot2.dto.CategoryDTO;
 import it.siinfo.springboot2.dto.ProductDTO;
 import it.siinfo.springboot2.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -21,41 +21,41 @@ public class CategoryControllerImpl implements CategoryController {
 
     @PostMapping(path = "/create")
     @Override
-    public void create (@RequestBody Long aLong) {
-        service.create (aLong);
+    public void create (@RequestBody CategoryDTO categoryDTO) {
+        service.create (categoryDTO);
     }
 
     @PutMapping(path = "/add_cat_to_prod/products/{proId}/categories/{catId}")
     @Override
-    public void addCategoryToProduct (@PathVariable java.lang.Long proId,
-                                      @PathVariable java.lang.Long catId) {
+    public void addCategoryToProduct (@PathVariable Long proId,
+                                      @PathVariable Long catId) {
         service.addCategoryToProduct (proId, catId);
     }
 
     @GetMapping(path = "/get_all_cat")
     @Override
-    public List<Long> getAllCategory () {
+    public List<CategoryDTO> getAllCategory () {
         return service.getAllCategory ();
     }
 
     @PutMapping(path = "/update_cat/categories/{id}")
     @Override
-    public void updateCategory (@PathVariable java.lang.Long id,
-                                Long aLong) {
-        service.updateCategory (id, aLong);
+    public void updateCategory (@PathVariable Long id,
+                                CategoryDTO categoryDTO) {
+        service.updateCategory (id, categoryDTO);
     }
 
     @DeleteMapping(path = "/delete_cat_to_prod/products/{prodId}/categories/{catId}")
     @Override
-    public void deleteCategoryToProduct (java.lang.Long catId,
-                                         java.lang.Long prodId) {
+    public void deleteCategoryToProduct (Long catId,
+                                         Long prodId) {
         service.deleteCategoryToProduct (prodId, catId);
     }
 
     @GetMapping(path = "find_cat_by_prod_id/products/{id}")
     @Override
-    public List<Long> findCategoryByProdId (java.lang.Long id) {
-        return service.trovaUnNomePerStoMetodo (id);
+    public List<CategoryDTO> findCategoryByProdId (java.lang.Long id) {
+        return service.findCategoryByProdId (id);
     }
 
     @GetMapping(path = "find_pro_by_cat_id/categories/{id}")
@@ -72,20 +72,20 @@ public class CategoryControllerImpl implements CategoryController {
 
     @GetMapping(path = "/empty")
     @Override
-    public List<Long> findAllCategoryWhereProductIsNotPresent () {
+    public List<CategoryDTO> findAllCategoryWhereProductIsNotPresent () {
         return service.findAllCategoryWhereProductIsNotPresent ();
     }
 
     @GetMapping(path = "/products/{prodId}/related")
     @Override
-    public List<ProductDTO> productWithSameCategory (@PathVariable java.lang.Long prodId) {
+    public List<ProductDTO> productWithSameCategory (@PathVariable Long prodId) {
         return service.productWithSameCategory (prodId);
     }
 
     @GetMapping(path = "/add_in_bulk/{prodId}")
     @Override
-    public void addMultipleCategoriesToProduct (java.lang.Long prodId,
-                                                Set<java.lang.Long> category) {
+    public void addMultipleCategoriesToProduct (@PathVariable Long prodId,
+                                                @RequestBody Set<Long> category) {
         service.addMultipleCategoriesToProduct (prodId, category);
     }
 

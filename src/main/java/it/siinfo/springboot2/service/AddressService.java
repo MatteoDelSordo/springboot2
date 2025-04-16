@@ -35,7 +35,7 @@ public class AddressService {
     @Transactional
     public List<AddressDTO> getAddressList () {
         try {
-
+            log.info ("Chiamo la lista degli indirizzi");
             List<Address> listdto = addressRepository.findAll ();
             log.info ("La lista degli indirizzi è stata chiamata{}", listdto);
             return listdto.stream ().map (addressMapper::toAddressDto).toList ();
@@ -49,85 +49,110 @@ public class AddressService {
 
     @Transactional
     public AddressDTO getAddressById (Long id) {
+        log.info ("Cerco l'indirizzo con l'id: {}", id);
         Optional<Address> optionalAddress = addressRepository.findById (id);
+        log.info ("L'indirizzo è stato trovato: {}", optionalAddress);
         if (optionalAddress.isEmpty ()) {
-            log.info ("L'indirizzo che è stato chiamato è tornato vuoto");
             throw new ResourceNotFoundException ("Indirizzo non trovato");
         }
+        log.debug ("Trasformo l'optional in entità");
         Address address = optionalAddress.get ();
 
-        log.info ("Questo indirizzo {} è stato cercato", address);
+        log.info ("Questo indirizzo {} è stato mappato", address);
 
         return addressMapper.toAddressDto (address);
     }
 
     @Transactional
     public AddressDTO getAddressByUserId (Long id) {
-
+        log.info ("Cerco indirizzo per utente con id: {}", id);
         Optional<Users> usersOptional = userRepository.findById (id);
         if (usersOptional.isEmpty ()) {
-            log.info ("Qualcosa è andato storto nella ricerca dell indirizzo dell utente con id {} e non è stato possibile trovarlo",id);
+
             throw new ResourceNotFoundException ("Utente non trovato nella ricerca dell indirizzo");
         }
-        Users user = usersOptional.get ();
-        Address address = user.getAddress ();
 
+        Users user = usersOptional.get ();
+
+        Address address = user.getAddress ();
+        log.info ("Recuperato indirizzo  dell utente con id {}", id);
         return addressMapper.toAddressDto (address);
     }
 
     @Transactional
     public void createAddress (Long id,
                                AddressDTO addressDTO) {
-//        if (addressDTO.getCity() == null || addressDTO.getStreet() == null || addressDTO.getState() == null ||
-//        addressDTO.getZipCode() == null || addressDTO.getCountry() == null) {
-//            throw new IllegalArgumentException("All address fields are required");
-//        }
+
+        log.info ("Ricerca user con id: {}", id);
+
         Optional<Users> optionalUser = userRepository.findById (id);
         if (optionalUser.isEmpty ()) {
             throw new ResourceNotFoundException ("User con id" + id + "non presente, non è possibile creare un " +
                     "indirizzo");
         }
+
         Users user = optionalUser.get ();
         Address address = addressMapper.toAddress (addressDTO);
+        log.info ("Aggiungo l'user a address");
         address.setUser (user);
+        {
+        }
+        log.info ("Aggiungo l'address a user");
+        log.debug ("User: {}  | Address : {}", user, address);
         user.setAddress (address);
+        log.info ("Uscita dal metodo");
         addressRepository.save (address);
     }
 
     @Transactional
     public void updateAddressById (Long id,
                                    AddressDTO addressDTO) {
-
+        log.info ("cerco l'indirizzo con id: {}", id);
         Optional<Address> optionalAddress = addressRepository.findById (id);
         if (optionalAddress.isEmpty ()) {
             throw new ResourceNotFoundException ("Indirizzo non trovato");
         }
+        log.info ("Indirizzo trovato");
         Address address = optionalAddress.get ();
+        log.debug ("Inidirizzo con id {} prima della modifica: {}", id, address);
         AddressDTO addressDaModificare = addressMapper.toAddressDto (address);
 
-        address.setCity (addressDTO.getCity ());
-        address.setCountry (addressDTO.getCountry ());
-        address.setState (addressDTO.getState ());
-        address.setStreet (addressDTO.getStreet ());
-        address.setZipCode (addressDTO.getZipCode ());
+        addressDaModificare.setCity (addressDTO.getCity ());
+        addressDaModificare.setCountry (addressDTO.getCountry ());
+        addressDaModificare.setState (addressDTO.getState ());
+        addressDaModificare.setStreet (addressDTO.getStreet ());
+        addressDaModificare.setZipCode (addressDTO.getZipCode ());
+
+        Address addressModificato = addressMapper.toAddress (addressDaModificare);
+
+        log.debug ("Indirizzo con id : {} dopo la modifica: {}", id, addressModificato);
 
         addressRepository.save (address);
 
+        log.info ("Inidirizzo modificato con successo");
     }
 
     @Transactional
     public void deleteAddressById (Long id) {
+
+        log.info ("Recupero l'indirizzo con id {} per eliminarlo", id);
         Optional<Address> optionalAddress = addressRepository.findById (id);
         if (optionalAddress.isEmpty ()) {
             throw new ResourceNotFoundException ("Indirizzo non presente");
         }
+
+        log.debug ("Recupero l'utente associato all indirizzo {}", optionalAddress);
         Address address = optionalAddress.get ();
         Users user = address.getUser ();
         user.setAddress (null);
-        userRepository.save (user);
-        addressRepository.deleteById (id);
-    }
+        log.debug ("L'inidirizzo è stato scollegato dall utente {}", user);
 
+        userRepository.save (user);
+        log.debug ("User aggiornato");
+
+        addressRepository.deleteById (id);
+        log.info ("Inidirizzo eliminato");
+    }
 
 
 }

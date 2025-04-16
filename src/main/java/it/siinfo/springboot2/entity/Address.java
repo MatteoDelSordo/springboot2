@@ -34,16 +34,16 @@ public class Address {
     @JsonBackReference
     private Shipment shipment;
 
-    public Address() {
+    public Address () {
     }
 
-    public Address(String street,
-                   String city,
-                   String state,
-                   String zipCode,
-                   String country,
-                   Users user,
-                   Shipment shipment) {
+    public Address (String street,
+                    String city,
+                    String state,
+                    String zipCode,
+                    String country,
+                    Users user,
+                    Shipment shipment) {
         this.street = street;
         this.city = city;
         this.state = state;
@@ -53,67 +53,73 @@ public class Address {
         this.shipment = shipment;
     }
 
-    public Long getId() {
+    public Long getId () {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId (Long id) {
         this.id = id;
     }
 
-    public String getStreet() {
+    public String getStreet () {
         return street;
     }
 
-    public void setStreet(String street) {
+    public void setStreet (String street) {
         this.street = street;
     }
 
-    public String getCity() {
+    public String getCity () {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity (String city) {
         this.city = city;
     }
 
-    public String getState() {
+    public String getState () {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState (String state) {
         this.state = state;
     }
 
-    public String getZipCode() {
+    public String getZipCode () {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
+    public void setZipCode (String zipCode) {
         this.zipCode = zipCode;
     }
 
-    public String getCountry() {
+    public String getCountry () {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry (String country) {
         this.country = country;
     }
 
-    public Users getUser() {
+    public Users getUser () {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser (Users user) {
         this.user = user;
     }
 
-    public Shipment getShipment() {
+    public Shipment getShipment () {
         return shipment;
     }
 
-    public void setShipment(Shipment shipment) {
+    public void setShipment (Shipment shipment) {
         this.shipment = shipment;
+    }
+
+    @Override
+    public String toString () {
+        return "Address{" + "shipment=" + shipment + ", user=" + user + ", country='" + country + '\'' + ", zipCode" +
+                "='" + zipCode + '\'' + ", state='" + state + '\'' + ", city='" + city + '\'' + ", street='" + street + '\'' + '}';
     }
 }

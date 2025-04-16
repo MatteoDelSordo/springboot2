@@ -1,6 +1,6 @@
 package it.siinfo.springboot2.controller.interfaces;
 
-import it.siinfo.springboot2.dto.Long;
+import it.siinfo.springboot2.dto.CategoryDTO;
 import it.siinfo.springboot2.dto.ProductDTO;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,31 +12,31 @@ import java.util.Set;
 public interface CategoryController {
 
 
-    public void create (@RequestBody Long aLong);
+    public void create (@RequestBody CategoryDTO categoryDTO);
 
 
-    public void addCategoryToProduct (@PathVariable java.lang.Long proId,
-                                      @PathVariable java.lang.Long catId);
+    public void addCategoryToProduct (@PathVariable Long proId,
+                                      @PathVariable Long catId);
 
-    public List<Long> getAllCategory ();
+    public List<CategoryDTO> getAllCategory ();
 
-    public void updateCategory (@PathVariable java.lang.Long id,
-                                @RequestBody Long aLong);
+    public void updateCategory (@PathVariable Long id,
+                                @RequestBody CategoryDTO categoryDTO);
 
-    public void deleteCategoryToProduct (@PathVariable java.lang.Long catId,
-                                         @PathVariable java.lang.Long prodId);
+    public void deleteCategoryToProduct (@PathVariable Long catId,
+                                         @PathVariable Long prodId);
 
-    public List<Long> findCategoryByProdId (@PathVariable java.lang.Long id);
+    public List<CategoryDTO> findCategoryByProdId (@PathVariable Long id);
 
-    public List<ProductDTO> findProdByCat (@PathVariable java.lang.Long id);
+    public List<ProductDTO> findProdByCat (@PathVariable Long id);
 
     public List<ProductDTO> getAllWhereCatIsNotPresent ();
 
-    public List<it.siinfo.springboot2.dto.Long> findAllCategoryWhereProductIsNotPresent();
+    public List<CategoryDTO> findAllCategoryWhereProductIsNotPresent();
 
-    public List<ProductDTO> productWithSameCategory(java.lang.Long prodId);
+    public List<ProductDTO> productWithSameCategory(Long prodId);
 
-    public void addMultipleCategoriesToProduct(java.lang.Long prodId, Set<java.lang.Long> category);
+    public void addMultipleCategoriesToProduct(Long prodId, Set<Long> category);
 
-    public void deleteById(java.lang.Long id);
+    public void deleteById(Long id);
 }

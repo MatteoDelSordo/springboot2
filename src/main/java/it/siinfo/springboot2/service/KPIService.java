@@ -23,10 +23,10 @@ public class KPIService {
     final SupplierProductRepository supplierProductRepository;
 
 
-    public KPIService(OrderRepository orderRepository,
-                      SupplierRepository supplierRepository,
-                      ProductRepository productRepository,
-                      SupplierProductRepository supplierProductRepository) {
+    public KPIService (OrderRepository orderRepository,
+                       SupplierRepository supplierRepository,
+                       ProductRepository productRepository,
+                       SupplierProductRepository supplierProductRepository) {
         this.orderRepository = orderRepository;
         this.supplierRepository = supplierRepository;
         this.productRepository = productRepository;
@@ -34,22 +34,37 @@ public class KPIService {
     }
 
 
-    public KpiDTO pippo() {
+    public KpiDTO pippo () {
 
+        log.info ("Entro nel medoto per calcolare il totale degli ordini, dei fornitori, dei prodotti e la media del "
+                + "prezzo e della quantità per prodotto");
+        log.debug ("Inizio le query");
+
+
+        log.debug ("Query per contare gli ordini totali");
         Long totalOrders = orderRepository.count ();
+        log.debug ("risultato = {}", totalOrders);
+        log.debug ("Query per contare i fornitori totali");
         Long totalSuppliers = supplierRepository.count ();
+        log.debug ("risultato = {}", totalSuppliers);
+        log.debug ("Query per contare i prodotti totali");
         Long totalProducts = productRepository.count ();
+        log.debug ("risultato = {}", totalProducts);
+        log.debug ("Query per recuperare i prezzi e le quantita dei prodotti");
         List<SupplierProduct> supplierProductList = supplierProductRepository.findAll ();
+        log.debug ("Risultato = {}", supplierProductList);
 
         Double averagePrice = 0.00;
 
         try {
+            log.debug ("Inizio del ciclo for per recuperare il totale dei prezzi");
 
             for (SupplierProduct supplierProduct : supplierProductList) {
                 averagePrice = averagePrice + supplierProduct.getPrice ();
-
+                log.debug ("dentro il ciclo for");
             }
             averagePrice = averagePrice / supplierProductList.size ();
+            log.debug ("prezzo medio: {}", averagePrice);
         } catch (ArithmeticException arithmeticException) {
             System.out.println ("Qualcosa nel calcolo della media del prezzo è andata storta");
         }
@@ -59,13 +74,17 @@ public class KPIService {
 
         Double averageQuantityPerProduct = null;
         try {
-
-            averageQuantityPerProduct = supplierProductList.stream ().map (SupplierProduct::getQuantity).mapToInt (value -> value).average ().orElse (
+            log.debug ("Recuperaro del totale della quantità e calcolo media ");
+            averageQuantityPerProduct =
+                    supplierProductList.stream ().map (SupplierProduct::getQuantity).mapToInt (value -> value).average ().orElse (
                     0);
+            log.debug ("Media quantità: {}", averageQuantityPerProduct);
         } catch (ArithmeticException arithmeticException) {
             System.out.println ("Qualcosa nel calcolo della media della quantità prodotto è andato storto ");
         }
 
+
+        log.info ("fine metodo");
 
         return new KpiDTO (totalOrders, totalSuppliers, totalProducts, averagePrice, averageQuantityPerProduct);
     }
