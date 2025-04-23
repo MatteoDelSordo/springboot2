@@ -12,4 +12,9 @@ public class healthCheckController {
     public void chiamata() {
     }
 
+    @GetMapping(path = "/index")
+    public String index() {
+        return "index.html";
+    }
+
 }

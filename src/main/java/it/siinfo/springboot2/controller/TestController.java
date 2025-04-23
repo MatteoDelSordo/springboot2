@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/test")
 public class TestController {
 
-
     @GetMapping(path = "/test")
-    public String test (HttpServletRequest request) {
+    public String test(HttpServletRequest request) {
         return "Test" +
-                "/n   " + request.getSession ().getId ();
+                "/n   " + request.getSession().getId();
     }
 
+    @GetMapping("/index")
+    public String index() {
+        return "index.html";
+    }
 
 }

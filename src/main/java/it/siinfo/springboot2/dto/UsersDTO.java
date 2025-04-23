@@ -1,5 +1,6 @@
 package it.siinfo.springboot2.dto;
 
+import it.siinfo.springboot2.Enum.Role;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,22 +36,26 @@ public class UsersDTO {
     private AddressDTO address;
 
 
+    private Role role;
+
     public UsersDTO () {
 
     }
 
-    public UsersDTO (String phoneNumber,
-                     Timestamp createdAt,
+    public UsersDTO (String password,
                      String eMail,
                      String name,
-                     String password,
-                     AddressDTO address) {
-        this.phoneNumber = phoneNumber;
-        this.createdAt = createdAt;
+                     Timestamp createdAt,
+                     String phoneNumber,
+                     AddressDTO address,
+                     Role role) {
+        this.password = password;
         this.eMail = eMail;
         this.name = name;
-        this.password = password;
+        this.createdAt = createdAt;
+        this.phoneNumber = phoneNumber;
         this.address = address;
+        this.role = role;
     }
 
     public Long getId () {
@@ -107,5 +112,13 @@ public class UsersDTO {
 
     public void setAddress (AddressDTO address) {
         this.address = address;
+    }
+
+    public Role getRole () {
+        return role;
+    }
+
+    public void setRole (Role role) {
+        this.role = role;
     }
 }

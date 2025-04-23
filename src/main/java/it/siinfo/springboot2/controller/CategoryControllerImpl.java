@@ -31,6 +31,10 @@ public class CategoryControllerImpl implements CategoryController {
                                       @PathVariable Long catId) {
         service.addCategoryToProduct (proId, catId);
     }
+    @PostMapping(path = "/pippo")
+    public void addCategoryToProductPippo () {
+        service.getAllCategory ();
+    }
 
     @GetMapping(path = "/get_all_cat")
     @Override
