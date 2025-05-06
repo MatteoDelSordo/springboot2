@@ -1,6 +1,6 @@
 package it.siinfo.springboot2.controller;
 
-import it.siinfo.springboot2.controller.interfaces.AddressController;
+
 import it.siinfo.springboot2.dto.AddressDTO;
 import it.siinfo.springboot2.service.AddressServiceimpl;
 import jakarta.validation.Valid;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/address")
-public class AddressControllerImpl implements AddressController {
+public class AddressControllerImpl  {
 
 
     AddressServiceimpl addressService;

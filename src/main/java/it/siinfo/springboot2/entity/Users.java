@@ -3,6 +3,7 @@ package it.siinfo.springboot2.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.sql.Timestamp;
 
 

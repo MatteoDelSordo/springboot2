@@ -1,8 +1,5 @@
 package it.siinfo.springboot2.entity;
 
-import jakarta.persistence.*;
-
-
 public class Person {
 
     private Long id;

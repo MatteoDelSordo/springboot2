@@ -7,7 +7,6 @@ import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.mapper.PaymentMethodMapper;
 import it.siinfo.springboot2.repository.PaymentMethodRepository;
 import it.siinfo.springboot2.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

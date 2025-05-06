@@ -1,7 +1,5 @@
 package it.siinfo.springboot2.dto;
 
-import it.siinfo.springboot2.entity.Product;
-
 import java.util.Set;
 
 public class CategoryDTO {

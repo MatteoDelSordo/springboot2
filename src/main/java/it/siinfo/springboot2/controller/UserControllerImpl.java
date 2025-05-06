@@ -1,8 +1,5 @@
 package it.siinfo.springboot2.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.siinfo.springboot2.controller.interfaces.UserController;
 import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Users;

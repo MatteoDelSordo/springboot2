@@ -5,8 +5,6 @@ import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.mapper.UsersMapper;
 import it.siinfo.springboot2.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
