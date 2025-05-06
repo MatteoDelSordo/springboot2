@@ -2,9 +2,8 @@ package it.siinfo.springboot2.controller;
 
 import it.siinfo.springboot2.controller.interfaces.AddressController;
 import it.siinfo.springboot2.dto.AddressDTO;
-import it.siinfo.springboot2.service.AddressService;
+import it.siinfo.springboot2.service.AddressServiceimpl;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,10 +13,10 @@ import java.util.List;
 public class AddressControllerImpl implements AddressController {
 
 
-    AddressService addressService;
+    AddressServiceimpl addressService;
 
 
-    public AddressControllerImpl (AddressService addressService) {
+    public AddressControllerImpl (AddressServiceimpl addressService) {
         this.addressService = addressService;
     }
 

@@ -8,6 +8,7 @@ import it.siinfo.springboot2.mapper.AddressMapper;
 import it.siinfo.springboot2.repository.AddressRepository;
 import it.siinfo.springboot2.repository.UserRepository;
 
+import it.siinfo.springboot2.service.Interfaces.AddressService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,16 +18,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AddressService {
+public class AddressServiceimpl implements AddressService {
 
-    private static final Logger log = LoggerFactory.getLogger (AddressService.class);
+    private static final Logger log = LoggerFactory.getLogger (AddressServiceimpl.class);
     private final AddressMapper addressMapper;
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
 
-    public AddressService (AddressMapper addressMapper,
-                           AddressRepository addressRepository,
-                           UserRepository userRepository) {
+    public AddressServiceimpl (AddressMapper addressMapper,
+                               AddressRepository addressRepository,
+                               UserRepository userRepository) {
         this.addressMapper = addressMapper;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;

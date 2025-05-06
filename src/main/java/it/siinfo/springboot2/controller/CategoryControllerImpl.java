@@ -3,7 +3,7 @@ package it.siinfo.springboot2.controller;
 import it.siinfo.springboot2.controller.interfaces.CategoryController;
 import it.siinfo.springboot2.dto.CategoryDTO;
 import it.siinfo.springboot2.dto.ProductDTO;
-import it.siinfo.springboot2.service.CategoryService;
+import it.siinfo.springboot2.service.CategoryServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +13,9 @@ import java.util.Set;
 @RequestMapping(path = "/category")
 public class CategoryControllerImpl implements CategoryController {
 
-    private final CategoryService service;
+    private final CategoryServiceImpl service;
 
-    public CategoryControllerImpl (CategoryService service) {
+    public CategoryControllerImpl (CategoryServiceImpl service) {
         this.service = service;
     }
 

@@ -80,7 +80,7 @@ public class KPIService {
                     0);
             log.debug ("Media quantità: {}", averageQuantityPerProduct);
         } catch (ArithmeticException arithmeticException) {
-            System.out.println ("Qualcosa nel calcolo della media della quantità prodotto è andato storto ");
+            System.out.println ("Qualcosa nel calcolo della media della quantità prodotto è andato storto");
         }
 
 

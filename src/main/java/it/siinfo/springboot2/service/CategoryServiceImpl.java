@@ -9,31 +9,31 @@ import it.siinfo.springboot2.mapper.CategoryMapper;
 import it.siinfo.springboot2.mapper.ProductMapper;
 import it.siinfo.springboot2.repository.CategoryRepository;
 import it.siinfo.springboot2.repository.ProductRepository;
+import it.siinfo.springboot2.service.Interfaces.CategoryService;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
-    private static final Logger log = LoggerFactory.getLogger (CategoryService.class);
+    private static final Logger log = LoggerFactory.getLogger (CategoryServiceImpl.class);
     public CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
 
-    public CategoryService (CategoryRepository categoryRepository,
-                            CategoryMapper categoryMapper,
-                            ProductRepository productRepository,
-                            ProductMapper productMapper) {
+    public CategoryServiceImpl (CategoryRepository categoryRepository,
+                                CategoryMapper categoryMapper,
+                                ProductRepository productRepository,
+                                ProductMapper productMapper) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.productRepository = productRepository;
@@ -139,7 +139,6 @@ public class CategoryService {
         return productMapper.toProductDtoList (productRepository.findByCategories_Id (id));
 
     }
-
 
 
     public List<ProductDTO> getAllWhereCategoryIsNotPresent () {
