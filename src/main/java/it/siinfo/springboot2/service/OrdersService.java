@@ -13,9 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,7 +69,7 @@ public class OrdersService {
     public void addOrderWithUser (OrdersDTO ordersDTO,
                                   UsersDTO usersDTO) {
         log.info ("Aggiunta di un ordine e di un utente");
-        Users user = usersMapper.toEntity (usersDTO);
+        Users user = usersMapper.toUser (usersDTO);
         Users userPerOrdine = userRepository.save (user);
         Orders order = ordersMapper.toOrders (ordersDTO);
 
@@ -108,7 +111,7 @@ public class OrdersService {
     }
 
     @Transactional
-    public Orders addOrderToUser (Long idUser,
+    public OrdersDTO addOrderToUser (Long idUser,
                                   OrdersDTO ordersDTO) {
         log.info ("Creo un ordine e lo aggiungo a un utente");
 
@@ -120,11 +123,11 @@ public class OrdersService {
         order.setUsers (user);
         log.debug ("Ordine: {} aggiunto a utente", order);
         log.info ("Ordine salvato");
-        return orderRepository.save (order);
+        return ordersMapper.toOrdersDTO (orderRepository.save (order));
     }
 
     @Transactional
-    public Orders addExistingOrderToUser (Long idUser,
+    public void addExistingOrderToUser (Long idUser,
                                           Long idOrder) {
         log.info ("Assegnazione di un ordine esistente a un utente");
         Users user =
@@ -135,7 +138,7 @@ public class OrdersService {
         log.debug ("Ordine trovato: {}", order);
         order.setUsers (user);
         log.info ("Ordine aggiornato");
-        return orderRepository.save (order);
+
 
     }
 
@@ -180,15 +183,19 @@ public class OrdersService {
     public List<OrdersDTO> getAllByUserIdQuery (Long id) {
         log.info ("Recupero la lista di ordine dell utente con id: {} tramite query", id);
         List<Orders> ordersList = orderRepository.findAllByUserIdQuerySchiantata (id);
-        log.debug ("Lista recuperata {}",ordersList);
+        log.debug ("Lista recuperata {}", ordersList);
         log.info ("Lista recuperata");
         return ordersList.stream ().map (ordersMapper::toOrdersDTO).toList ();
 
     }
 
     @Transactional
-    public Page<Orders> getAllOrders (Pageable pageable) {
-        return orderRepository.findAll (pageable);
+    public Page<OrdersDTO> getAllOrders (Pageable pageable) {
+
+
+        Page<Orders> orders = orderRepository.findAll (pageable);
+
+        return orders.map (ordersMapper::toOrdersDTO);
     }
 }
 

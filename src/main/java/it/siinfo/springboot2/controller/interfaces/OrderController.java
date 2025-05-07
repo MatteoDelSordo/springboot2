@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.siinfo.springboot2.dto.OrdersDTO;
 import it.siinfo.springboot2.dto.UserAndOrderDTO;
-import it.siinfo.springboot2.entity.Orders;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -91,9 +90,9 @@ public interface OrderController {
             description = "Lista di ordini restituita con successo"), @ApiResponse(responseCode = "400", description
             = "Parametri di paginazione non validi")})
     @GetMapping("/paginated")
-    public Page<Orders> getAllOrders(@ParameterObject Pageable pageable);
+    public Page<OrdersDTO> getAllOrders(@ParameterObject Pageable pageable);
 
     @PutMapping(path = "/associateUtoO/{idUser}/{idOrder}")
-    public OrdersDTO associateUserToOrder(@PathVariable Long idUser,
-                                          @PathVariable Long idOrder);
+    public void associateUserToOrder(@PathVariable Long idUser,
+                                     @PathVariable Long idOrder);
 }

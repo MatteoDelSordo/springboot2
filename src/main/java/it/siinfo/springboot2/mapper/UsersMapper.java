@@ -3,6 +3,7 @@ package it.siinfo.springboot2.mapper;
 import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Users;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public interface UsersMapper {
 
 
-    Users toEntity(UsersDTO usersDTO);
+    Users toUser(UsersDTO usersDTO);
 
-    UsersDTO toDto(Users users);
+    UsersDTO toUserDto(Users users);
 
-    List<Users> toUsersDTOList(List<UsersDTO> usersDTOS);
+    List<Users> toUsersList(List<UsersDTO> usersDTOS);
 
-    List<UsersDTO> toUsersList(List<Users> users);
+    List<UsersDTO> toUsersDtoList(List<Users> users);
 
 
 }

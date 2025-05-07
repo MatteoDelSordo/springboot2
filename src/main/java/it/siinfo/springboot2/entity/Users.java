@@ -1,9 +1,9 @@
 package it.siinfo.springboot2.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import it.siinfo.springboot2.Enum.Role;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -33,8 +34,10 @@ public class Users implements UserDetails {
     @JsonManagedReference
     @JoinColumn(name = "address_id")
     private Address address;
-    @Enumerated()
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "roles_users", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name =
+            "idRole"))
+    private Set<Role> roles;
 
     public Users () {
     }
@@ -45,14 +48,14 @@ public class Users implements UserDetails {
                   Timestamp createdAt,
                   String phoneNumber,
                   Address address,
-                  Role role) {
+                  Set<Role> roles) {
         this.name = name;
         this.eMail = eMail;
         this.password = password;
         this.createdAt = createdAt;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.role = role;
+        this.roles = roles;
     }
 
     public Long getId () {
@@ -81,7 +84,7 @@ public class Users implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities () {
-        return List.of (new SimpleGrantedAuthority (role.name ()));
+        return roles;
     }
 
     public String getPassword () {
@@ -90,7 +93,7 @@ public class Users implements UserDetails {
 
     @Override
     public String getUsername () {
-        return "";
+        return geteMail ();
     }
 
     public void setPassword (String password) {
@@ -121,11 +124,11 @@ public class Users implements UserDetails {
         this.address = address;
     }
 
-    public Role getRole () {
-        return role;
+    public Set<Role> getRoles () {
+        return roles;
     }
 
-    public void setRole (Role role) {
-        this.role = role;
+    public void setRoles (Set<Role> roles) {
+        this.roles = roles;
     }
 }

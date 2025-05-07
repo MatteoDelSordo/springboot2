@@ -1,11 +1,7 @@
 package it.siinfo.springboot2.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.siinfo.springboot2.controller.interfaces.UserController;
 import it.siinfo.springboot2.dto.UsersDTO;
-import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,28 +24,28 @@ public class UserControllerImpl implements UserController {
 
 
     @GetMapping(path = "/lista")
-    public List<Users> getUsers () {
+    public List<UsersDTO> getUsers () {
         return userService.getUsers ();
     }
 
 
     @GetMapping(path = "/listaordinata")
-    public List<Users> getUsersOrderedByName () {
+    public List<UsersDTO> getUsersOrderedByName () {
         return userService.getUserOrderedByName ();
     }
 
     @GetMapping(path = "/listaordinataconjpa")
-    public List<Users> metodoStrano () {
+    public List<UsersDTO> metodoStrano () {
         return userService.metodoJpa ();
     }
 
     @GetMapping(path = "/getbyname/{name}")
-    public List<Users> getUsersByName (@PathVariable String name) {
+    public List<UsersDTO> getUsersByName (@PathVariable String name) {
         return userService.getUserByName (name);
     }
 
     @GetMapping(path = "/utente/{id}")
-    public Users getUserById (@PathVariable Long id) {
+    public UsersDTO getUserById (@PathVariable Long id) {
         return userService.findUserById (id);
     }
 

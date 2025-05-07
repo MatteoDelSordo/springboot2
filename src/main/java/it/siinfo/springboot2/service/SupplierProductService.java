@@ -49,11 +49,10 @@ public class SupplierProductService {
         this.productMapper = productMapper;
     }
 
-    public SupplierProduct createSupplierProduct (SupplierProductDTO supplierProductDTO) {
+    public void createSupplierProduct (SupplierProductDTO supplierProductDTO) {
 
         SupplierProduct supplierProduct = supplierProductMapper.toSupplierProduct (supplierProductDTO);
 
-        return supplierProductRepository.save (supplierProduct);
     }
 
 

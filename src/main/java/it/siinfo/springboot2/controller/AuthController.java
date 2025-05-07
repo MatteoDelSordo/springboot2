@@ -2,6 +2,7 @@ package it.siinfo.springboot2.controller;
 
 import it.siinfo.springboot2.dto.LoginRequest;
 import it.siinfo.springboot2.dto.LoginResponse;
+import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.service.AuthanService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,5 +26,12 @@ public class AuthController {
         return ResponseEntity.ok (service.login (loginRequest));
     }
 
+    @PostMapping(value = "/register")
+    public ResponseEntity<String> register (@RequestBody UsersDTO usersDTO) {
+
+        service.register (usersDTO);
+
+        return ResponseEntity.ok ("Pippo corretto");
+    }
 
 }

@@ -6,9 +6,11 @@ import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.mapper.UsersMapper;
 import it.siinfo.springboot2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,38 +25,40 @@ public class UserService implements UserDetailsService {
 
     final UserRepository userRepository;
     private UsersMapper usersMapper;
+    private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public UserService (UserRepository userRepository,
-                        UsersMapper usersMapper) {
+                        UsersMapper usersMapper,
+                        PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.usersMapper = usersMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public List<Users> getUsers () {
-        return userRepository.findAll ();
+    public List<UsersDTO> getUsers () {
+        return usersMapper.toUsersDtoList (userRepository.findAll ());
     }
 
     @Transactional
-    public List<Users> metodoJpa () {
-        return userRepository.findAllByOrderByNameAsc ();
+    public List<UsersDTO> metodoJpa () {
+        return usersMapper.toUsersDtoList (userRepository.findAllByOrderByNameAsc ());
     }
 
     @Transactional
-    public Users findUserById (Long id) {
-        Optional<Users> optionalUsers = userRepository.findById (id);
-        if (optionalUsers.isEmpty ()) {
-            throw new ResourceNotFoundException ("Utente non trovato");
-        }
-        return optionalUsers.get ();
+    public UsersDTO findUserById (Long id) {
+        Users users = userRepository.findById (id).orElseThrow (() -> new ResourceNotFoundException ("bho"));
+
+        return usersMapper.toUserDto (users);
     }
 
     @Transactional
-    public Users addUser (UsersDTO usersDto) {
-
-        Users u = usersMapper.toEntity (usersDto);
-        return userRepository.save (u);
+    public UsersDTO addUser (UsersDTO usersDto) {
+        usersDto.setPassword (passwordEncoder.encode (usersDto.getPassword ()));
+        Users u = usersMapper.toUser (usersDto);
+        return usersMapper.toUserDto (userRepository.save (u));
 
     }
 
@@ -90,17 +94,17 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public List<Users> getUserOrderedByName () {
+    public List<UsersDTO> getUserOrderedByName () {
         List<Users> orderedList = userRepository.findAll ();
 
         orderedList =
                 orderedList.stream ().sorted (Comparator.comparing (Users::getName)).collect (Collectors.toList ());
-        return orderedList;
+        return usersMapper.toUsersDtoList (orderedList);
     }
 
     @Transactional
-    public List<Users> getUserByName (String name) {
-        return userRepository.findByName (name);
+    public List<UsersDTO> getUserByName (String name) {
+        return usersMapper.toUsersDtoList (userRepository.findByName (name));
     }
 
     @Override

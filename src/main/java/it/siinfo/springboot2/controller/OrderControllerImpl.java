@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.siinfo.springboot2.controller.interfaces.OrderController;
 import it.siinfo.springboot2.dto.OrdersDTO;
 import it.siinfo.springboot2.dto.UserAndOrderDTO;
-import it.siinfo.springboot2.entity.Orders;
 import it.siinfo.springboot2.mapper.OrdersMapper;
 import it.siinfo.springboot2.service.OrdersService;
 import org.springdoc.core.annotations.ParameterObject;
@@ -22,15 +21,14 @@ public class OrderControllerImpl implements OrderController {
 
 
     private final OrdersService ordersService;
-    private final OrdersMapper ordersMapper;
 
 
-    public OrderControllerImpl(OrdersService ordersService,
-                               OrdersMapper ordersMapper) {
+
+    public OrderControllerImpl(OrdersService ordersService) {
 
         this.ordersService = ordersService;
 
-        this.ordersMapper = ordersMapper;
+
     }
 
 
@@ -72,7 +70,7 @@ public class OrderControllerImpl implements OrderController {
     @PostMapping(path = "/addordertouser/{idUser}")
     public void addOrderToUser(@RequestBody OrdersDTO ordersDTO,
                                @PathVariable Long idUser) {
-        Orders order = ordersService.addOrderToUser(idUser, ordersDTO);
+        ordersService.addOrderToUser(idUser, ordersDTO);
     }
 
     @Operation(summary = "Recupera tutti gli ordini di un utente tramite query", description = "Restituisce una lista di ordini di un utente dato l'ID, utilizzando una query specifica.")
@@ -124,7 +122,7 @@ public class OrderControllerImpl implements OrderController {
             @ApiResponse(responseCode = "200", description = "Lista ordini restituita con successo")
     })
     @GetMapping("/paginated")
-    public Page<Orders> getAllOrders(@ParameterObject Pageable pageable) {
+    public Page<OrdersDTO> getAllOrders(@ParameterObject Pageable pageable) {
         return ordersService.getAllOrders(pageable);
     }
 
@@ -134,10 +132,10 @@ public class OrderControllerImpl implements OrderController {
             @ApiResponse(responseCode = "404", description = "Ordine o utente non trovato")
     })
     @PutMapping(path = "/associateUtoO/{idUser}/{idOrder}")
-    public OrdersDTO associateUserToOrder(@PathVariable Long idUser,
-                                          @PathVariable Long idOrder) {
+    public void associateUserToOrder(@PathVariable Long idUser,
+                                     @PathVariable Long idOrder) {
 
-        return ordersMapper.toOrdersDTO(ordersService.addExistingOrderToUser(idUser, idOrder));
+        ordersService.addExistingOrderToUser(idUser, idOrder);
     }
 
 

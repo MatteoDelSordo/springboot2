@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -26,12 +27,18 @@ public class JwtService {
 //        Prendi i ruoli come stringhe e li salvi in una lista
         List<String> roles = utente.getAuthorities ().stream ().map (GrantedAuthority::getAuthority).toList ();
 
-//        prendi l'username(he puo esere la qualuncque)
+//        prendi l'username(che puo essere la qualunque)
         String username = utente.getUsername ();
 
-//        venogno messe in una mappa con chiave valore in cuila chiave è una stringa
+//        venogno messe in una mappa con chiave valore in cui la chiave è una stringa
 //        e il valore un oggetto in questo caso le variabili locali sopra
-        Map<String, Object> claims = Map.of ("username", username, "roles", roles);
+//        la parte tra virgolette è la chiave, mentre la variabile è il valore in questo caso è messo ad obj dentro
+//        la mappa perchè userame è una stringa mentre roles è una collection
+        Map<String, Object> claims = new HashMap<> ();
+        claims.put ("username", username);
+        claims.put ("roles", roles);
+//                Map.of ("username", username, "roles", roles);
+
 
 //      sto robo crea il jwt, in cui mette la mappa di prima in cui claims sono i ruoli e l'username (il payload)
 //      il subject è chi ha creato il coso
@@ -62,7 +69,7 @@ public class JwtService {
     //    Xd
     public List<String> extractRoles (String token) {
 
-        return List.of (extractClaims (token).get ("roles").toString ());
+        return List.of (extractClaims (token).get ("roles").toString ().replaceAll("^\\[", "").replaceAll("]$", "").trim());
 
     }
 
@@ -73,10 +80,7 @@ public class JwtService {
 
         Date expiration = claimsJws.getPayload ().getExpiration ();
 
-        if (expiration.before (new Date ())) {
-            return false;
-        }
-        return true;
+        return !expiration.before (new Date ());
 
     }
 

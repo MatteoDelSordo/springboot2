@@ -17,7 +17,7 @@ public interface UserController {
             "Restituisce una lista di tutti gli utenti " + "presenti nel database.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Lista utenti restituita con successo")})
     @GetMapping(path = "/lista")
-    public List<Users> getUsers ();
+    public List<UsersDTO> getUsers ();
 
 
     @Operation(summary = "Recupera la lista utenti ordinata per nome", description = "Restituisce una lista di " +
@@ -25,13 +25,13 @@ public interface UserController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description =
             "Lista utenti ordinata restituita con " + "successo")})
     @GetMapping(path = "/listaordinata")
-    public List<Users> getUsersOrderedByName ();
+    public List<UsersDTO> getUsersOrderedByName ();
 
     @Operation(summary = "Recupera lista utenti con metodo JPA", description = "Restituisce una lista di utenti " +
             "utilizzando un metodo JPA personalizzato.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Lista utenti restituita con successo")})
     @GetMapping(path = "/listaordinataconjpa")
-    public List<Users> metodoStrano ();
+    public List<UsersDTO> metodoStrano ();
 
     @Operation(summary = "Recupera utenti per nome", description = "Restituisce una lista di utenti con il nome " +
             "specificato.")
@@ -39,14 +39,14 @@ public interface UserController {
             "Lista utenti con il nome specificato " + "restituita con successo"), @ApiResponse(responseCode = "404",
             description = "Nessun utente trovato con " + "questo nome")})
     @GetMapping(path = "/getbyname/{name}")
-    public List<Users> getUsersByName (@PathVariable String name);
+    public List<UsersDTO> getUsersByName (@PathVariable String name);
 
     @Operation(summary = "Recupera un utente per ID", description =
             "Restituisce un utente specifico in base all'ID " + "fornito.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Utente trovato"),
             @ApiResponse(responseCode = "404", description = "Utente non trovato")})
     @GetMapping(path = "/utente/{id}")
-    public Users getUserById (@PathVariable Long id);
+    public UsersDTO getUserById (@PathVariable Long id);
 
 
     @Operation(summary = "Crea un nuovo utente", description =

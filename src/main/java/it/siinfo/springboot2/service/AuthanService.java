@@ -2,6 +2,8 @@ package it.siinfo.springboot2.service;
 
 import it.siinfo.springboot2.dto.LoginRequest;
 import it.siinfo.springboot2.dto.LoginResponse;
+import it.siinfo.springboot2.dto.RegisterRequest;
+import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Users;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,14 +28,19 @@ public class AuthanService {
 
 //        Trova l'user tramite userrname e lo autentica prendendosi username e pw dalla login request
         Users user = userService.findUserByUsername (loginRequest.getUsername ());
-        authenticationManager.authenticate (
-                new UsernamePasswordAuthenticationToken (loginRequest.getUsername (),loginRequest.getPassWord ())
-        );
+        authenticationManager.authenticate (new UsernamePasswordAuthenticationToken (loginRequest.getUsername (),
+                loginRequest.getPassWord ()));
 //        questo pippo
         String pippo = jwtService.generateToken (user);
 
 
         return new LoginResponse (pippo);
+
+    }
+
+    public void register (UsersDTO usersDTO) {
+
+        userService.addUser (usersDTO);
 
     }
 

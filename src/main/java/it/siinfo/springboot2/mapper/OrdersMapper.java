@@ -4,6 +4,7 @@ import it.siinfo.springboot2.dto.OrdersDTO;
 import it.siinfo.springboot2.entity.Orders;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -20,5 +21,6 @@ public interface OrdersMapper {
 
     List<OrdersDTO> toOrdersDTOList(List<Orders> orders);
 
+//    Page<OrdersDTO> toPageDTO (Page<Orders> orders);
 
 }
