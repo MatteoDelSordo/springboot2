@@ -4,9 +4,6 @@ import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Role;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.repository.RoleRepository;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

@@ -3,7 +3,6 @@ package it.siinfo.springboot2.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import it.siinfo.springboot2.dto.ProductDTO;
 import it.siinfo.springboot2.dto.SupplierDTO;
 import it.siinfo.springboot2.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,6 @@ import it.siinfo.springboot2.controller.interfaces.AddressController;
 import it.siinfo.springboot2.dto.AddressDTO;
 import it.siinfo.springboot2.service.AddressService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

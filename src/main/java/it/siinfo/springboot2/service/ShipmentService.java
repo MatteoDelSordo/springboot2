@@ -9,7 +9,6 @@ import it.siinfo.springboot2.mapper.ShipmentMapper;
 import it.siinfo.springboot2.repository.AddressRepository;
 import it.siinfo.springboot2.repository.OrderRepository;
 import it.siinfo.springboot2.repository.ShipmentRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

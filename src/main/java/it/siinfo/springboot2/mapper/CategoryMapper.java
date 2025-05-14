@@ -1,11 +1,8 @@
 package it.siinfo.springboot2.mapper;
 
 import it.siinfo.springboot2.dto.CategoryDTO;
-import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Category;
 import it.siinfo.springboot2.entity.Product;
-import it.siinfo.springboot2.repository.ProductRepository;
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
