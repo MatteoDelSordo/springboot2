@@ -1,10 +1,6 @@
 package it.siinfo.springboot2.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 
 @Entity
 public class ImageEntity {

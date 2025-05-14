@@ -4,7 +4,6 @@ import it.siinfo.springboot2.dto.OrdersDTO;
 import it.siinfo.springboot2.entity.Orders;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 

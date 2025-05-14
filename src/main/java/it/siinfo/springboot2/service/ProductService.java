@@ -10,7 +10,6 @@ import it.siinfo.springboot2.mapper.SupplierMapper;
 import it.siinfo.springboot2.repository.ProductRepository;
 import it.siinfo.springboot2.repository.SupplierProductRepository;
 import it.siinfo.springboot2.repository.SupplierRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

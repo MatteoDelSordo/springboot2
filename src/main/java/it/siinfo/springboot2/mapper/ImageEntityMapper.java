@@ -1,9 +1,8 @@
 package it.siinfo.springboot2.mapper;
 
-import org.mapstruct.Mapper;
-
 import it.siinfo.springboot2.dto.ImageDTO;
 import it.siinfo.springboot2.entity.ImageEntity;
+import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public class ImageEntityMapper {

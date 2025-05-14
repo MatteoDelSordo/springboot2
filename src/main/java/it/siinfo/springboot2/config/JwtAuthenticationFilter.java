@@ -1,7 +1,6 @@
 package it.siinfo.springboot2.config;
 
 import it.siinfo.springboot2.dto.RefreshTokenDto;
-import it.siinfo.springboot2.repository.RefreshTokenRepository;
 import it.siinfo.springboot2.service.JwtService;
 import it.siinfo.springboot2.service.RefreshTokenService;
 import it.siinfo.springboot2.service.UserService;
@@ -81,14 +80,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } else {
                 //Se il controllo di prima non viene superato viene pulito il context
                 SecurityContextHolder.clearContext ();
-                filterChain.doFilter (request, response);
             }
         } catch (Exception e) {
             handlerExceptionResolver.resolveException (request, response, null, e);
             System.out.println ("errore nel chatch filterchain " + e);
-
         }
-        filterChain.doFilter (request, response);
 
 
     }

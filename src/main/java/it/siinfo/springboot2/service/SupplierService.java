@@ -11,7 +11,6 @@ import it.siinfo.springboot2.mapper.SupplierProductMapper;
 import it.siinfo.springboot2.repository.ProductRepository;
 import it.siinfo.springboot2.repository.SupplierProductRepository;
 import it.siinfo.springboot2.repository.SupplierRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,10 +1,12 @@
 package it.siinfo.springboot2.dto;
 
 import it.siinfo.springboot2.Enum.ProductType;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.sql.Timestamp;
-
-import jakarta.validation.constraints.*;
 
 
 public class OrdersDTO {
