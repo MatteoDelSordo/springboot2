@@ -11,7 +11,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleDbOperationException (Exception e) {
-        ErrorResponseDTO errorResponse = new ErrorResponseDTO ("INTERNAL_SERVER_ERROR", e.getMessage ());
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO ("Maledetto il giorno che ho iniziato a studiare programmazione", e.getMessage ());
+//        System.out.println (e.getMessage ());
         return new ResponseEntity<> (errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
