@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.siinfo.springboot2.dto.UsersDTO;
 import it.siinfo.springboot2.entity.Users;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public interface UserController {
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Utente creato con successo"),
             @ApiResponse(responseCode = "400", description = "Dati non validi forniti nella richiesta")})
     @PostMapping(path = "/add")
-    public void createUser (@Valid @RequestBody UsersDTO usersDto);
+    public UsersDTO createUser (@RequestBody UsersDTO usersDto);
 
     @Operation(summary = "Elimina un utente per ID", description =
             "Rimuove un utente dal database in base all'ID " + "fornito.")

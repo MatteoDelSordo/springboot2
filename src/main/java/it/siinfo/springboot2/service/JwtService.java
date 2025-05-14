@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import it.siinfo.springboot2.dto.RefreshTokenDto;
+import it.siinfo.springboot2.entity.RefreshToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +22,8 @@ public class JwtService {
     private String jwtSecret;
     @Value("${jwt.expire}")
     private Long jwtExp;
-
+    @Value("${jwt.refreshExp}")
+    private Long jwtRefreshExp;
 
     public String generateToken (UserDetails utente) {
 
@@ -50,6 +53,22 @@ public class JwtService {
 
     }
 
+    public String generateRefreshToken (UserDetails user) {
+
+        List<String> roles = user.getAuthorities ().stream ().map (GrantedAuthority::getAuthority).toList ();
+
+        String username = user.getUsername ();
+
+        Map<String, Object> claims = new HashMap<> ();
+        claims.put ("username", username);
+        claims.put ("roles", roles);
+
+        return Jwts.builder ().claims (claims).subject (username)
+                .issuedAt (new Date ()).expiration (new Date (new Date ().getTime () + jwtRefreshExp))
+                .signWith (getSecretKey ()).compact ();
+    }
+
+
     //    Questo metodo serve per estrarre i byte della chiave personalizzata e la cripa
 //    a una direzione (credo) in modo che non possa essere accessivile
     private SecretKey getSecretKey () {
@@ -57,6 +76,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor (bytes);
 
     }
+
 
     //    vabbe
     public String extractUsername (String jwtToken) {
@@ -69,7 +89,8 @@ public class JwtService {
     //    Xd
     public List<String> extractRoles (String token) {
 
-        return List.of (extractClaims (token).get ("roles").toString ().replaceAll("^\\[", "").replaceAll("]$", "").trim());
+        return List.of (extractClaims (token).get ("roles").toString ().replaceAll ("^\\[", "").replaceAll ("]$",
+                "").trim ());
 
     }
 

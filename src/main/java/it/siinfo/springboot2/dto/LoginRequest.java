@@ -2,9 +2,12 @@ package it.siinfo.springboot2.dto;
 
 import java.util.Objects;
 
-public final class LoginRequest {
-    private final String username;
-    private final String passWord;
+public class LoginRequest {
+    private String username;
+    private String passWord;
+
+    public LoginRequest () {
+    }
 
     public LoginRequest (String username,
                          String passWord) {

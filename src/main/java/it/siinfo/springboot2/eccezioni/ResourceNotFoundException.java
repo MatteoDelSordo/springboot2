@@ -9,10 +9,10 @@ public class ResourceNotFoundException extends RuntimeException {
         super (message);
     }
 
-public ResourceNotFoundException(String entita, String pippo){
+    public ResourceNotFoundException (String entita,
+                                      String pippo) {
 
-}
-
+    }
 
 
 }

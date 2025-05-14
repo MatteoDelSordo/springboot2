@@ -5,6 +5,7 @@ import it.siinfo.springboot2.eccezioni.ResourceNotFoundException;
 import it.siinfo.springboot2.entity.Users;
 import it.siinfo.springboot2.mapper.UsersMapper;
 import it.siinfo.springboot2.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +16,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,12 +39,12 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public List<UsersDTO> getUsers () {
-        return usersMapper.toUsersDtoList (userRepository.findAll ());
+        return usersMapper.toUserDtoList (userRepository.findAll ());
     }
 
     @Transactional
     public List<UsersDTO> metodoJpa () {
-        return usersMapper.toUsersDtoList (userRepository.findAllByOrderByNameAsc ());
+        return usersMapper.toUserDtoList (userRepository.findAllByOrderByNameAsc ());
     }
 
     @Transactional
@@ -56,11 +56,25 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UsersDTO addUser (UsersDTO usersDto) {
-        usersDto.setPassword (passwordEncoder.encode (usersDto.getPassword ()));
-        Users u = usersMapper.toUser (usersDto);
-        return usersMapper.toUserDto (userRepository.save (u));
+        try {
 
+            usersDto.setPassword (passwordEncoder.encode (usersDto.getPassword ()));
+            Users u = usersMapper.toUser (usersDto);
+            Users saved = userRepository.save (u);
+            UsersDTO userDto = usersMapper.toUserDto (saved);
+            return userDto;
+        } catch (Exception e) {
+            System.out.println (e.getMessage ());
+            return new UsersDTO ("nothing",
+                    "pippo@gmail.com",
+                    "Lello",
+                    new Timestamp (new Date ().getTime ()),
+                    "12353",
+                    null,
+                    null);
+        }
     }
+
 
     @Transactional
     public void deleteUserById (Long id) {
@@ -99,18 +113,21 @@ public class UserService implements UserDetailsService {
 
         orderedList =
                 orderedList.stream ().sorted (Comparator.comparing (Users::getName)).collect (Collectors.toList ());
-        return usersMapper.toUsersDtoList (orderedList);
+        return usersMapper.toUserDtoList (orderedList);
     }
 
     @Transactional
     public List<UsersDTO> getUserByName (String name) {
-        return usersMapper.toUsersDtoList (userRepository.findByName (name));
+        name = name.trim ();
+        name = name.substring (0, 1).toUpperCase () + name.substring (1);
+        return usersMapper.toUserDtoList (userRepository.findByName (name));
     }
 
     @Override
     public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
-        return userRepository.findByEMail (username).orElseThrow (() -> new ResourceNotFoundException (
-                "Utente non trovato"));
+
+        return userRepository.findByEMail (username).orElseThrow (() -> new ResourceNotFoundException ("Utente non " + "trovato"));
+
     }
 
 

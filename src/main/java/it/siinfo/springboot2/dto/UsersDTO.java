@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 public class UsersDTO {
     @Valid
@@ -36,7 +37,7 @@ public class UsersDTO {
     private AddressDTO address;
 
 
-    private RoleDTO roles;
+    private Set<Long> idRoles;
 
     public UsersDTO () {
 
@@ -48,14 +49,14 @@ public class UsersDTO {
                      Timestamp createdAt,
                      String phoneNumber,
                      AddressDTO address,
-                     RoleDTO roles) {
+                     Set<Long> idRoles) {
         this.password = password;
         this.eMail = eMail;
         this.name = name;
         this.createdAt = createdAt;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.roles = roles;
+        this.idRoles = idRoles;
     }
 
     public Long getId () {
@@ -114,11 +115,11 @@ public class UsersDTO {
         this.address = address;
     }
 
-    public RoleDTO getRole () {
-        return roles;
+    public Set<Long> getIdRoles () {
+        return idRoles;
     }
 
-    public void setRole (RoleDTO role) {
-        this.roles = role;
+    public void setIdRoles (Set<Long> idRoles) {
+        this.idRoles = idRoles;
     }
 }
